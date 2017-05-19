@@ -57,68 +57,70 @@ class Login extends Component{
             <TouchableWithoutFeedback
                 onPress={() => dismissKeyboard()}
                 style={{flex: 1}}>
-                    <View style={styles.container} />
-                        <View style={styles.wrapper}>
-                            <View style={styles.inputWrap}>
-                                <View style={styles.iconWrap}>
-                                    <Image
-                                        source={personIcon}
-                                        style = {styles.icon}
-                                        resizeMode="contain"
+                <View style={[styles.background,styles.container]} >
+                        <View style={styles.container} />
+                            <View style={styles.wrapper}>
+                                <View style={styles.inputWrap}>
+                                    <View style={styles.iconWrap}>
+                                        <Image
+                                            source={personIcon}
+                                            style = {styles.icon}
+                                            resizeMode="contain"
+                                        />
+                                    </View>
+                                    <TextInput
+                                        testID="test-id-textfield-email"
+                                        placeholder="Email"
+                                        style={styles.input}
+                                        underlineColorAndroid="transparent"
+                                        onChangeText={(email) => this.setState({email})}
+                                        value={this.state.email}
                                     />
                                 </View>
-                                <TextInput
-                                    testID="test-id-textfield-email"
-                                    placeholder="Email"
-                                    style={styles.input}
-                                    underlineColorAndroid="transparent"
-                                    onChangeText={(email) => this.setState({email})}
-                                    value={this.state.email}
-                                />
-                            </View>
-                            <View style={styles.inputWrap}>
-                                <View style={styles.iconWrap}>
-                                    <Image
-                                        source={lockIcon}
-                                        style = {styles.icon}
-                                        resizeMode="contain"
+                                <View style={styles.inputWrap}>
+                                    <View style={styles.iconWrap}>
+                                        <Image
+                                            source={lockIcon}
+                                            style = {styles.icon}
+                                            resizeMode="contain"
+                                        />
+                                    </View>
+                                    <TextInput
+                                        testID="test-id-textfield-password"
+                                        placeholder="Password"
+                                        secureTextEntry
+                                        style={styles.input}
+                                        underlineColorAndroid="transparent"
+                                        onChangeText={(password) => this.setState({password})}
+                                        value={this.state.password}
                                     />
                                 </View>
-                                <TextInput
-                                    testID="test-id-textfield-password"
-                                    placeholder="Password"
-                                    secureTextEntry
-                                    style={styles.input}
-                                    underlineColorAndroid="transparent"
-                                    onChangeText={(password) => this.setState({password})}
-                                    value={this.state.password}
-                                />
+                                <TouchableOpacity activeOpacity={.5}
+                                    testID="test-id-buttonSignIn"
+                                    onPress= {this.signIn.bind(this)}>
+                                    <View style={styles.button}>
+                                        <Text style={styles.buttonText}>Login</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity testID="test-id-buttonSignUp" activeOpacity={.5}
+                                    onPress={ this.goToSignUp.bind(this) }>
+                                    <View>
+                                        <Text style={styles.signUp}>Do not have an account, Create One!</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity testID="test-id-buttonForgot" activeOpacity={.5}
+                                    onPress={ this.gotToForgotPassword.bind(this) }>
+                                    <View>
+                                        <Text style={styles.signUp}>Forgot Password?</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <ActivityIndicator
+                                    animating = {this.state.loading}
+                                    color='#111'
+                                    size = 'large'></ActivityIndicator>
                             </View>
-                            <TouchableOpacity activeOpacity={.5}
-                                testID="test-id-buttonSignIn"
-                                onPress= {this.signIn.bind(this)}>
-                                <View style={styles.button}>
-                                    <Text style={styles.buttonText}>Sign In</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity testID="test-id-buttonSignUp" activeOpacity={.5}
-                                onPress={ this.goToSignUp.bind(this) }>
-                                <View>
-                                    <Text style={styles.signUp}>Do not have an account, Sign Up!</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity testID="test-id-buttonForgot" activeOpacity={.5}
-                                onPress={ this.gotToForgotPassword.bind(this) }>
-                                <View>
-                                    <Text style={styles.signUp}>Forgot Password?</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <ActivityIndicator
-                                animating = {this.state.loading}
-                                color='#111'
-                                size = 'large'></ActivityIndicator>
-                        </View>
-                    <View style={styles.container} />
+                        <View style={styles.container} />
+                    </View>
             </TouchableWithoutFeedback>
         );
     }
@@ -129,8 +131,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   background: {
-      width: null,
-      height: null
+      backgroundColor: '#A6A6A6'
   },
   inputWrap:{
       flexDirection: "row",
