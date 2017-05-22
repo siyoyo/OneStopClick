@@ -62,8 +62,11 @@ class Login extends Component{
                 }
             }, this)
             .flatMap((userCredentials) => {
-                return Rx.Observable.fromPromise(LoginService.login(userCredentials.email, userCredentials.password))
-                    .timeout(Config.timeoutThreshold, new Error(ErrorMessages.serverError));
+                return Rx.Observable.fromPromise(LoginService.login({
+                    username: userCredentials.username,
+                    password: userCredentials.password
+                }))
+                .timeout(Config.timeoutThreshold, new Error(ErrorMessages.serverError));
             })
             .map((response) => {
                 return {
