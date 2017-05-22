@@ -23,6 +23,10 @@ const background = require("../images/background.jpg");
 const lockIcon = require("../images/lock.png");
 const personIcon = require("../images/person.png");
 const mailIcon = require("../images/mail.png");
+const Reachability = require("./Util/Reachability");
+const LoginService = require('./Api/LoginService');
+const Rx = require('rx');
+const ErrorMessages = require("./Util/ErrorMessages");
 
 class Login extends Component{
     constructor(props){
@@ -50,6 +54,36 @@ class Login extends Component{
     }
 
     signIn(){
+        Reachability.isNetReachable()
+            .map((isReachable) => {
+                return {
+                    'username': this.state.email,
+                    'password': this.state.password
+                }
+            }, this)
+            .flatMap((userCredentials) => {
+                return Rx.Observable.fromPromise(LoginService.login(userCredentials.email, userCredentials.password))
+                    .timeout(Config.timeoutThreshold, new Error(ErrorMessages.serverError));
+            })
+            .map((response) => {
+                return {
+                    tokenType: response.ResponseObject.token_type,
+                    expiresIn: response.ResponseObject.expires_in,
+                    accessToken: response.ResponseObject.access_token,
+                    refreshToken: response.ResponseObject.refreshToken
+                }
+            })
+            .subscribe(
+            function (response) {
+                this.props.navigator.replace({
+                    title: 'Home',
+                    id: 'Home'
+                })
+            }.bind(this),
+            function (error) {
+                Alert.alert('Error', JSON.stringify(error));
+            }.bind(this)
+            );
     }
 
     render(){
@@ -57,7 +91,7 @@ class Login extends Component{
             <TouchableWithoutFeedback
                 onPress={() => dismissKeyboard()}
                 style={{flex: 1}}>
-                    <View style={styles.container} />
+                    <View style={styles.container}>
                         <View style={styles.wrapper}>
                             <View style={styles.inputWrap}>
                                 <View style={styles.iconWrap}>
@@ -118,7 +152,7 @@ class Login extends Component{
                                 color='#111'
                                 size = 'large'></ActivityIndicator>
                         </View>
-                    <View style={styles.container} />
+                    </View>
             </TouchableWithoutFeedback>
         );
     }

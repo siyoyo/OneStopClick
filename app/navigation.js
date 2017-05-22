@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BackAndroid } from 'react-native'
 import {Navigator} from 'react-native-deprecated-custom-components'
 import Registration from './registration'
+import Home from './home'
 import Login from './login'
 
 export default class Navigation extends Component{
@@ -32,6 +33,8 @@ export default class Navigation extends Component{
                 return(<Registration navigator={ navigator } />)
             case 'Login':
                 return(<Login navigator={ navigator } />)
+            case 'Home':
+                return (<Home navigator={ navigator } />)
         }
     }
     render(){
