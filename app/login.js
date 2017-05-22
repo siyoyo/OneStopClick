@@ -72,10 +72,10 @@ class Login extends Component{
             })
             .map((response) => {
                 return {
-                    tokenType: response.ResponseObject.token_type,
-                    expiresIn: response.ResponseObject.expires_in,
-                    accessToken: response.ResponseObject.access_token,
-                    refreshToken: response.ResponseObject.refreshToken
+                    tokenType: response.token_type,
+                    expiresIn: response.expires_in,
+                    accessToken: response.access_token,
+                    refreshToken: response.refreshToken
                 }
             })
             .subscribe(
