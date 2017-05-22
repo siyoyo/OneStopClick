@@ -27,6 +27,8 @@ const Reachability = require("./Util/Reachability");
 const LoginService = require('./Api/LoginService');
 const Rx = require('rx');
 const ErrorMessages = require("./Util/ErrorMessages");
+const ErrorAlert = require("./Util/ErrorAlert");
+const Config = require('./config');
 
 class Login extends Component{
     constructor(props){
@@ -84,7 +86,7 @@ class Login extends Component{
                 })
             }.bind(this),
             function (error) {
-                Alert.alert('Error', JSON.stringify(error));
+                ErrorAlert.show(error);
             }.bind(this)
             );
     }
