@@ -1,6 +1,7 @@
 'use strict';
 
 const Config = require('../config');
+const UserStore = require('../Store/UserStore');
 
 const APIManager = {
 	constructUrl: function(endpoint) {
@@ -23,6 +24,25 @@ const APIManager = {
 	setupOptions: function(method, body) {
 		const header = new Headers();
 		header.append('Content-Type', 'application/json');
+
+		var options = {
+			method: method,
+			headers: header
+		};
+
+		if (body) {
+			options.body = JSON.stringify(body);
+		}
+
+		return options;
+	},
+
+	setupOptionsAuth: function(method, body) {
+		const header = new Headers();
+		header.append('Content-Type', 'application/json');
+		
+		var accessToken = 'Bearer' +  ' ' + UserStore.getState().accessToken;
+		header.append('Authorization', accessToken);
 
 		var options = {
 			method: method,
