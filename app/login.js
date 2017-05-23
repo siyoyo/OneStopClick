@@ -29,6 +29,9 @@ const Rx = require('rx');
 const ErrorMessages = require("./Util/ErrorMessages");
 const ErrorAlert = require("./Util/ErrorAlert");
 const Config = require('./config');
+const AccountAction = require('./Actions/account');
+const AccountReducer = require('./Reducers/account');
+const UserStore = require('./Store/UserStore');
 
 class Login extends Component{
     constructor(props){
@@ -37,7 +40,8 @@ class Login extends Component{
             loading: false,
             email: '',
             password: '',
-            userId: ''
+            userId: '',
+            accessToken: ''
         }
     }
 
@@ -77,6 +81,12 @@ class Login extends Component{
                     accessToken: response.access_token,
                     refreshToken: response.refreshToken
                 }
+            })
+            .doOnNext((response) => {
+                UserStore.dispatch({
+                    accessToken: response.accessToken,
+                    type: 'UPDATE_ACCESS_TOKEN'
+                });
             })
             .subscribe(
             function (response) {
@@ -224,7 +234,7 @@ function mapStateToProps(state) {
     return {
         userId: state.userId,
         email: state.email,
-        displayName: state.displayName
+        displayName: state.displayName,
     }
 }
 
