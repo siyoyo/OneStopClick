@@ -5,9 +5,9 @@ const ErrorMessages = require('../Util/ErrorMessages');
 const _ = require("underscore");
 const Rx = require('rx');
 
-const ProductService = Object.assign({}, APIManager, {
+const HomeService = Object.assign({}, APIManager, {
     getIndex: function () {
-        var url = this.constructUrl('api/product');
+        var url = this.constructUrl('home/products');
         const options = this.setupOptionsAuth("get");
         return fetch(url, options)
             .then(this.checkResponse)
@@ -17,8 +17,8 @@ const ProductService = Object.assign({}, APIManager, {
             });
     },
 
-    getDetails: function (productId) {
-        var url = this.constructUrl('api/product/details/') + productId;
+    getCategoryProducts: function (categoryId, pageNumber) {
+        var url = this.constructUrl('home/category/') + categoryId + '/' + pageNumber;
         const options = this.setupOptionsAuth("get");
         return fetch(url, options)
             .then(this.checkResponse)
@@ -29,4 +29,4 @@ const ProductService = Object.assign({}, APIManager, {
     }
 });
 
-module.exports = ProductService;
+module.exports = HomeService;
