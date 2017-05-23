@@ -19,6 +19,12 @@ const background = require("../images/background.jpg");
 const lockIcon = require("../images/lock.png");
 const personIcon = require("../images/person.png");
 const mailIcon = require("../images/mail.png");
+const Reachability = require("./Util/Reachability");
+const RegistrationService = require('./Api/RegistrationService');
+const Rx = require('rx');
+const ErrorMessages = require("./Util/ErrorMessages");
+const ErrorAlert = require("./Util/ErrorAlert");
+const Config = require('./config');
 
 export default class Registration extends Component{
     constructor(props){
@@ -30,17 +36,6 @@ export default class Registration extends Component{
             password:'',
             confirmPassword: ''
         }
-    }
-    updateDisplayName(name){
-        var user = Firebase.auth().currentUser
-        console.log(user)
-         user.updateProfile({
-            displayName: name
-                    }).then(function() {
-                        console.log(name)
-                }, function(error) {
-                    alert(error.message)
-                });
     }
     validateForm() {
         if(this.state.name === '' || this.state.email === '' || this.state.password === '' || this.state.confirmPassword === '') {
@@ -66,52 +61,41 @@ export default class Registration extends Component{
             loading: true
         })
 
-        Firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password)
-            .then((userData) => {
-            AsyncStorage.setItem('userData', JSON.stringify(userData));
-            console.log("before update name")
-            console.log(userData.displayName)
-            Alert.alert('Registration','User has been created',[{text:'OK', onPress: () =>
-                userData.updateProfile({
-                    displayName: this.state.name
-                }).then(() => {
-                    console.log(this.state.name)
-                    this.setState({
-                        name: '',
-                        email:'',
-                        password:'',
-                        confirmPassword:'',
-                        loading: false
-                    })
-                    this.props.navigator.replace({
-                    title: 'Login',
-                    id: 'Login',
-                })
-                }, function(error) {
-                    alert(error.message)
-                })
-            }])
-            console.log("after update name")
+        Reachability.isNetReachable()
+            .map((isReachable) => {
+                return {
+                    'email': this.state.email,
+                    'password': this.state.password,
+                    'password_confirmation': this.state.confirmPassword,
+                    'name':this.state.name
+                }
+            }, this)
+            .flatMap((userCredentials) => {
+                return Rx.Observable.fromPromise(RegistrationService.register({
+                    email: userCredentials.email,
+                    password: userCredentials.password,
+                    password_confirmation: userCredentials.password_confirmation,
+                    name : userCredentials.name
+                }))
+                .timeout(Config.timeoutThreshold, new Error(ErrorMessages.serverError));
             })
-            .catch((error) => {
-                //Handle Errors
-                var errorCode = error.code;
-                var errorMessage = error.message;
-
-                if (errorCode == 'auth/weak-password'){
-                    Alert.alert('Registration','The password is too weak',[{text:'OK', onPress: () => 
-                        this.setState({
-                            loading: false
-                        })
-                }])
-                }else{
-                    Alert.alert('Registration',error.message,[{text:'OK', onPress: () =>
-                        this.setState({
-                            loading: false
-                        })
-                    }])
+            .map((response) => {
+                return {
+                    message: response.message
                 }
             })
+            .subscribe(
+            function (response) {
+                Alert.alert('Registration', response.message,[{test:'OK', onPress:() => 
+                this.setState({
+                    loading: false
+                })
+            }])
+            }.bind(this),
+            function (error) {
+                ErrorAlert.show(error);
+            }.bind(this)
+            );
     }
 
     goToSignIn(){
