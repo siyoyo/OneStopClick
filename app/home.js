@@ -12,7 +12,8 @@ import{
     AsyncStorage,
     ActivityIndicator,
     Alert,
-    FlatList
+    FlatList,
+    NetInfo
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -77,17 +78,46 @@ class Home extends Component{
         }
     }
 
-    componentWillMount(){
-        Rx.Observable.fromPromise(HomeService.getIndex())
-         .map((response) => {
-                console.log(response);
-                return {
-                    'someObject' : response
-                }
+    componentDidMount() {
+        NetInfo.addEventListener(
+            'change',
+            this._handleConnectionInfoChange
+        );
+
+        this._getHomeProducts();
+    }
+
+    _getHomeProducts() {
+        var source = this._checkConnection() 
+            .filter(isConnected => isConnected) //only attempt to get home product if connected
+            .flatMap(() => {
+                return Rx.Observable.fromPromise(HomeService.getIndex());
             })
-        .subscribe((value ) => console.log(value),
-        (error) => console.log(e),
-        () => console.log('complete')); 
+            .doOnNext(response => {
+                return {
+                    'someObject': response
+                }
+            });
+
+        source.subscribe(
+            value => console.log(`value ${value}`),
+            e => console.log(`error : ${e}`),
+            () => console.log(`complete`)
+        );
+    }
+
+    _checkConnection(){
+        return Rx.Observable.create(observer => {
+            NetInfo.isConnected.fetch().then(isConnected => {
+                if (isConnected) {
+                    observer.next(isConnected);
+                    observer.onCompleted();
+                }
+                else {
+                    observer.error("no internet connection")
+                }
+            });
+        });
     }
 
     goToSignUp(){
@@ -144,6 +174,14 @@ class Home extends Component{
         return(
             <Image style={{width: 120, height: 180}} source={background} />
         )
+    }
+
+    _handleFirstConnectivityChange(isConnected) {
+        console.log('Then, is ' + (isConnected ? 'online' : 'offline'));
+        NetInfo.isConnected.removeEventListener(
+            'change',
+            handleFirstConnectivityChange
+        );
     }
 
     render(){

@@ -11,10 +11,10 @@ const Reachability = {
 			NetInfo.isConnected.fetch().done((isConnected) => {
 				NetInfo.isConnected.addEventListener('change', function (isConnected) {
 					if (isConnected) {
-						observer.onNext(isConnected);
+						observer.next(isConnected);
 						observer.onCompleted();
 					} else {
-						observer.onError(ErrorMessages.internetNotConnected);
+						observer.error(ErrorMessages.internetNotConnected);
 					}
 				});
 			});
