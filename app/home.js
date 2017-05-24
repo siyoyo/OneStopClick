@@ -80,17 +80,14 @@ class Home extends Component{
     componentWillMount(){
         Rx.Observable.fromPromise(HomeService.getIndex())
          .map((response) => {
-                console.log(response)
-            }) 
-            .doOnNext((response) => {
-                UserStore.dispatch({
-                    accessToken: response.accessToken,
-                    type: 'UPDATE_ACCESS_TOKEN'
-                });
-            }),
-             function (error) {
-                ErrorAlert.show(error);
-            }.bind(this)
+                console.log(response);
+                return {
+                    'someObject' : response
+                }
+            })
+        .subscribe((value ) => console.log(value),
+        (error) => console.log(e),
+        () => console.log('complete')); 
     }
 
     goToSignUp(){
