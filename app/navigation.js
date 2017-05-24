@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BackAndroid } from 'react-native'
+import { BackHandler } from 'react-native'
 import {Navigator} from 'react-native-deprecated-custom-components'
 import Registration from './registration'
 import Home from './home'
@@ -8,7 +8,7 @@ import Login from './login'
 export default class Navigation extends Component{
     constructor() {
         super()
-        BackAndroid.addEventListener('hardwareBackPress', () => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
             const routes = this._navigator.getCurrentRoutes();
             route = routes[routes.length - 1];
 
