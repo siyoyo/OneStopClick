@@ -74,11 +74,12 @@ class Home extends Component{
             loading: false,
             email: '',
             password: '',
-            userId: ''
+            userId: '',
+            homeData: []
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         NetInfo.addEventListener(
             'change',
             this._handleConnectionInfoChange
@@ -94,11 +95,14 @@ class Home extends Component{
                 return Rx.Observable.fromPromise(HomeService.getIndex());
             })
             .doOnNext(response => {
-                return {
-                    'someObject': response
-                }
+                var data = []
+                response.map((item) =>{
+                    data.push(item)
+                })
+                this.setState({
+                    homeData: [data]
+                })
             });
-
         source.subscribe(
             value => console.log(`value ${value}`),
             e => console.log(`error : ${e}`),
@@ -131,6 +135,24 @@ class Home extends Component{
         this.props.navigator.replace({
             title: 'Forgot Password',
             id: 'ForgotPassword'
+        })
+    }
+
+    createFlatList(response){
+        return response.map((data, i) => {
+            return(
+                <View key={i}>
+                    <View>
+                        <Text>{data[i].name}</Text>
+                        <FlatList
+                            horizontal
+                            ItemSeparatorComponent={() => <View style={{width: 5}} />}
+                            renderItem={({item}) => this._renderItem(item)}
+                            data={data[i].products}
+                        />
+                    </View>
+                </View>
+            )
         })
     }
 
@@ -188,24 +210,7 @@ class Home extends Component{
         return(
            <View style={{flex: 1}}>
             <View style={{flex: 1}}>
-                <View>
-                    <Text>My List </Text>
-                    <FlatList
-                        horizontal
-                        ItemSeparatorComponent={() => <View style={{width: 5}} />}
-                        renderItem={({item}) => this._renderItem(item)}
-                        data={shows_first}
-                    />
-                </View>
-                 <View>
-                <Text>List2 </Text>
-                <FlatList
-                    horizontal
-                    ItemSeparatorComponent={() => <View style={{width: 5}} />}
-                    renderItem={({item}) => this._renderItem(item)}
-                    data={shows_second}
-                />
-            </View>
+                {this.createFlatList(this.state.homeData)}
             </View>
            </View>
         )
