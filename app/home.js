@@ -77,8 +77,7 @@ class Home extends Component{
             email: '',
             password: '',
             userId: '',
-            homeData: [],
-            dataSource: ds.cloneWithRows([])
+            homeData: ds.cloneWithRows([])
         }
     }
 
@@ -97,19 +96,11 @@ class Home extends Component{
             .flatMap(() => {
                 return Rx.Observable.fromPromise(HomeService.getIndex());
             })
-            .doOnNext(response => {
-                var data = []
-                response.map((item) =>{
-                    data.push(item)
-                })
-                this.setState({
-                    homeData: [data]
-                })
-            });
+
         source.subscribe(
             function(value){
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(value)
+                    homeData: this.state.homeData.cloneWithRows(value)
                 })
             }.bind(this),
             e => console.log('error : ${e}'),
@@ -162,7 +153,7 @@ class Home extends Component{
     render(){
        return(
            <ListView
-                dataSource={this.state.dataSource}
+                dataSource={this.state.homeData}
                 renderRow={this._renderRow}
             />
         )
