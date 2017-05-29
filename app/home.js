@@ -13,7 +13,8 @@ import{
     ActivityIndicator,
     Alert,
     FlatList,
-    NetInfo
+    NetInfo,
+    ListView
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -70,12 +71,14 @@ const shows_second = [
 class Home extends Component{
     constructor(props){
         super(props)
+        const ds = new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2})
         this.state ={
             loading: false,
             email: '',
             password: '',
             userId: '',
-            homeData: []
+            homeData: [],
+            dataSource: ds.cloneWithRows([])
         }
     }
 
@@ -104,9 +107,13 @@ class Home extends Component{
                 })
             });
         source.subscribe(
-            value => console.log(`value ${value}`),
-            e => console.log(`error : ${e}`),
-            () => console.log(`complete`)
+            function(value){
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(value)
+                })
+            }.bind(this),
+            e => console.log('error : ${e}'),
+            () => console.log('complete')
         );
     }
 
@@ -123,75 +130,7 @@ class Home extends Component{
             });
         });
     }
-
-    goToSignUp(){
-        this.props.navigator.replace({
-            title: 'Registration',
-            id: 'Registration'
-        })
-    }
-
-    gotToForgotPassword(){
-        this.props.navigator.replace({
-            title: 'Forgot Password',
-            id: 'ForgotPassword'
-        })
-    }
-
-    createFlatList(response){
-        return response.map((data, i) => {
-            return(
-                <View key={i}>
-                    <View>
-                        <Text>{data[i].name}</Text>
-                        <FlatList
-                            horizontal
-                            ItemSeparatorComponent={() => <View style={{width: 5}} />}
-                            renderItem={({item}) => this._renderItem(item)}
-                            data={data[i].products}
-                        />
-                    </View>
-                </View>
-            )
-        })
-    }
-
-    signIn(){
-        Reachability.isNetReachable()
-            .map((isReachable) => {
-                return {
-                    'username': this.state.email,
-                    'password': this.state.password
-                }
-            }, this)
-            .flatMap((userCredentials) => {
-                return Rx.Observable.fromPromise(LoginService.login({
-                    username: userCredentials.username,
-                    password: userCredentials.password
-                }))
-                .timeout(Config.timeoutThreshold, new Error(ErrorMessages.serverError));
-            })
-            .map((response) => {
-                return {
-                    tokenType: response.token_type,
-                    expiresIn: response.expires_in,
-                    accessToken: response.access_token,
-                    refreshToken: response.refreshToken
-                }
-            })
-            .subscribe(
-            function (response) {
-                this.props.navigator.replace({
-                    title: 'Home',
-                    id: 'Home'
-                })
-            }.bind(this),
-            function (error) {
-                ErrorAlert.show(error);
-            }.bind(this)
-            );
-    }
-
+    
     _renderItem(item){
         return(
             <Image style={{width: 120, height: 180}} source={background} />
@@ -206,13 +145,26 @@ class Home extends Component{
         );
     }
 
-    render(){
-        return(
-           <View style={{flex: 1}}>
-            <View style={{flex: 1}}>
-                {this.createFlatList(this.state.homeData)}
+    _renderRow(rowData, sectionId, rowId){
+         return(
+            <View>
+                <Text>{rowData.name}</Text>
+                <FlatList
+                    horizontal
+                    ItemSeparatorComponent={() => <View style={{ width: 5}} />}
+                    renderItem={({item}) => <Image style={{ width: 120, height:180}} source={background} />}
+                    data= {rowData.products}
+                />
             </View>
-           </View>
+         )
+    }
+
+    render(){
+       return(
+           <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this._renderRow}
+            />
         )
     }
 }
