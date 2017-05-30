@@ -20,6 +20,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from './Actions'
 import Registration from './registration'
+import Header from './Components/header'
+import SideMenu from 'react-native-side-menu'
+import Menu from './Components/menu'
 
 const dismissKeyboard = require('dismissKeyboard');
 const background = require("../images/background.jpg");
@@ -33,41 +36,6 @@ const ErrorMessages = require("./Util/ErrorMessages");
 const ErrorAlert = require("./Util/ErrorAlert");
 const Config = require('./config');
 
-const shows_first = [
-    {
-        key: 1,
-        name: 'Colony',
-        image: 'http://proto.ink/wp-content/uploads/2016/12/636055955513037869162211565_movie.jpg'
-    },
-    {
-        key: 2,
-        name: 'Colony',
-        image: 'http://proto.ink/wp-content/uploads/2016/12/636055955513037869162211565_movie.jpg'       
-    },
-    {
-        key: 3,
-        name: 'Colony',
-        image: 'http://proto.ink/wp-content/uploads/2016/12/636055955513037869162211565_movie.jpg'
-    }
-]
-const shows_second = [
-    {
-        key: 4,
-        name: 'Colony',
-        image: 'http://proto.ink/wp-content/uploads/2016/12/636055955513037869162211565_movie.jpg'
-    },
-    {
-        key: 5,
-        name: 'Colony',
-        image: 'http://proto.ink/wp-content/uploads/2016/12/636055955513037869162211565_movie.jpg'       
-    },
-    {
-        key: 6,
-        name: 'Colony',
-        image: 'http://proto.ink/wp-content/uploads/2016/12/636055955513037869162211565_movie.jpg'
-    }
-]
-
 class Home extends Component{
     constructor(props){
         super(props)
@@ -77,8 +45,8 @@ class Home extends Component{
             email: '',
             password: '',
             userId: '',
-            homeData: [],
-            dataSource: ds.cloneWithRows([])
+            dataSource: ds.cloneWithRows([]),
+            isOpen: false
         }
     }
 
@@ -159,12 +127,31 @@ class Home extends Component{
          )
     }
 
+    toggle(){
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
+    }
+
+    updateMenu(isOpen){
+        this.setState({isOpen})
+    }
+
     render(){
        return(
-           <ListView
-                dataSource={this.state.dataSource}
-                renderRow={this._renderRow}
-            />
+           <View style={{flex:1}}>
+               <SideMenu
+                    menu={<Menu />}
+                    isOpen={this.state.isOpen}
+                    onChange={(isOpen) => this.updateMenu(isOpen)}
+                >
+                    <Header toggle={this.toggle.bind(this)}/>
+                    <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this._renderRow}
+                    />
+               </SideMenu>
+           </View>
         )
     }
 }
