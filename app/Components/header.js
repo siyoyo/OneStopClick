@@ -17,6 +17,7 @@ const Header = props => (
                 size = {25}
             />
         </TouchableWithoutFeedback>
+        <Text>One Stop Click</Text>
         <Icon
             name= 'search'
             color= 'black'
