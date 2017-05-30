@@ -4,6 +4,7 @@ import {Navigator} from 'react-native-deprecated-custom-components'
 import Registration from './registration'
 import Home from './home'
 import Login from './login'
+import ProductDetails from './ProductDetails'
 
 export default class Navigation extends Component{
     constructor() {
@@ -35,6 +36,8 @@ export default class Navigation extends Component{
                 return(<Login navigator={ navigator } />)
             case 'Home':
                 return (<Home navigator={ navigator } />)
+            case 'ProductDetails':
+                return (<ProductDetails navigator ={ navigator } />)
         }
     }
     render(){
