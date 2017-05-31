@@ -25,7 +25,6 @@ import SideMenu from 'react-native-side-menu'
 import Menu from './Components/menu'
 
 const dismissKeyboard = require('dismissKeyboard');
-const background = require("../images/background.jpg");
 const lockIcon = require("../images/lock.png");
 const personIcon = require("../images/person.png");
 const mailIcon = require("../images/mail.png");
@@ -35,18 +34,18 @@ const Rx = require('rx');
 const ErrorMessages = require("./Util/ErrorMessages");
 const ErrorAlert = require("./Util/ErrorAlert");
 const Config = require('./config');
+const ProductCategory = require('./ProductCategory');
 
 class Home extends Component{
     constructor(props){
         super(props)
-        const ds = new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2})
         this.state ={
             loading: false,
             email: '',
             password: '',
             userId: '',
             isOpen: false,
-            homeData: ds.cloneWithRows([])
+            homeData: []
         }
     }
 
@@ -69,7 +68,7 @@ class Home extends Component{
         source.subscribe(
             function(value){
                 this.setState({
-                    homeData: this.state.homeData.cloneWithRows(value)
+                    homeData: value
                 })
             }.bind(this),
             e => console.log('error : ${e}'),
@@ -90,12 +89,6 @@ class Home extends Component{
             });
         });
     }
-    
-    _renderItem(item){
-        return(
-            <Image style={{width: 120, height: 180}} source={background} />
-        )
-    }
 
     _handleFirstConnectivityChange(isConnected) {
         console.log('Then, is ' + (isConnected ? 'online' : 'offline'));
@@ -105,18 +98,10 @@ class Home extends Component{
         );
     }
 
-    _renderRow(rowData, sectionId, rowId){
-         return(
-            <View>
-                <Text>{rowData.name}</Text>
-                <FlatList
-                    horizontal
-                    ItemSeparatorComponent={() => <View style={{ width: 5}} />}
-                    renderItem={({item}) => <Image style={{ width: 120, height:180}} source={background} />}
-                    data= {rowData.products}
-                />
-            </View>
-         )
+    _renderItem(item){
+        return (
+             <ProductBox />
+        )
     }
 
     toggle(){
@@ -129,21 +114,25 @@ class Home extends Component{
         this.setState({isOpen})
     }
 
-    render(){
-       return(
-           <View style={{flex:1}}>
-               <SideMenu
+    render() {
+        return (
+            <View style={{ flex: 1 }}>
+                <SideMenu
                     menu={<Menu />}
                     isOpen={this.state.isOpen}
                     onChange={(isOpen) => this.updateMenu(isOpen)}
                 >
-                    <Header toggle={this.toggle.bind(this)}/>
-                    <ListView
-                    dataSource={this.state.homeData}
-                    renderRow={this._renderRow}
+                    <Header toggle={this.toggle.bind(this)} />
+                    <FlatList
+                        horizontal={false}
+                        data={this.state.homeData}
+                        renderItem={({ item }) => <ProductCategory
+                            category={item}
+                            horizontal={true}
+                        />}
                     />
-               </SideMenu>
-           </View>
+                </SideMenu>
+            </View>
         )
     }
 }
