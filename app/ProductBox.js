@@ -16,31 +16,26 @@ import {
 
 const Rx = require('rx');
 const background = require("../images/background.jpg");
+import ImageLoad from 'react-native-image-placeholder';
 
 class ProductBox extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            product: this.props.product
-        }
-    }
-
-    _isImageExist(imageUrl) {
-        var http = new XMLHttpRequest();
-
-        http.open('HEAD', imageUrl, false);
-        http.send();
-
-        return http.status != 404;
     }
 
     render() {
-        // var imageSource = this._isImageExist(this.state.product.images[0].image_url) ? this._isImageExist(this.state.product.images[0].image_url) : 'background';
         return (
-            <TouchableOpacity>
-                <Image style={{ width: 120, height: 180 }} source={background} />
-            </TouchableOpacity>
+            <View style={{ width: 120 }}>
+                <ImageLoad
+                    style={{ width: 120, height: 180 }}
+                    isShowActivity={false}
+                    source={{ uri: this.props.product.images[0].image_url }}
+                    placeholderSource={background}
+                />
+                <Text style={{ paddingTop: 5 }} numberOfLines={2}>{this.props.product.product_name}</Text>
+            </View>
         )
+
     }
 }
 

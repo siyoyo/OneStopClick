@@ -10,6 +10,7 @@
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-deprecated-custom-components": "^0.1.0",
+    "react-native-image-placeholder": "^1.0.7",
     "react-native-side-menu": "^0.20.1",
     "react-native-vector-icons": "^4.2.0",
     "react-redux": "^5.0.4",

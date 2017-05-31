@@ -22,23 +22,22 @@ const ProductBox = require("./ProductBox");
 class ProductBoxRow extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            category: this.props.category,
-            horizontal: this.props.horizontal
-        }
     }
 
     render() {
         return (
-            <View>
-                <Text>{this.state.category.name}</Text>
-                <FlatList
-                    horizontal={this.state.horizontal}
-                    ItemSeparatorComponent={() => <View style={{ width: 5}} />}
-                    data={this.state.category.products}
-                    renderItem={({item}) => <ProductBox product={item} />}
-                />
-            </View>
+            <View style={{ marginLeft: 10, marginTop: 10, backgroundColor: "#FFFFFF"}} >
+                <View style={{ margin: 10 }}>
+                    <Text style={{ fontWeight: 'bold', paddingBottom: 5 }}>{this.props.category.name}</Text>
+                    <FlatList
+                        horizontal={this.props.horizontal}
+                        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+                        data={this.props.category.products}
+                        renderItem={({ item }) => <ProductBox product={item} />}
+                    />
+                </View>
+                <View style={{ height: 10 }} />
+            </View >
         )
     }
 }

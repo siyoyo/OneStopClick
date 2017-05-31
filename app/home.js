@@ -34,7 +34,7 @@ const Rx = require('rx');
 const ErrorMessages = require("./Util/ErrorMessages");
 const ErrorAlert = require("./Util/ErrorAlert");
 const Config = require('./config');
-const ProductCategory = require('./ProductCategory');
+const ProductCategories = require('./ProductCategories');
 
 class Home extends Component{
     constructor(props){
@@ -123,24 +123,17 @@ class Home extends Component{
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: "#F0F0F0", paddingBottom: 20 }}>
                 <SideMenu
                     menu={<Menu />}
                     isOpen={this.state.isOpen}
                     onChange={(isOpen) => this.updateMenu(isOpen)}
                 >
-                    <Header 
+                    <Header
                         toggle={this.toggle.bind(this)} 
                         goToSearch={this.goToSearch.bind(this)}
                     />
-                    <FlatList
-                        horizontal={false}
-                        data={this.state.homeData}
-                        renderItem={({ item }) => <ProductCategory
-                            category={item}
-                            horizontal={true}
-                        />}
-                    />
+                    <ProductCategories categories={this.state.homeData} />
                 </SideMenu>
             </View>
         )
