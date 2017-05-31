@@ -5,6 +5,7 @@ import Registration from './registration'
 import Home from './home'
 import Login from './login'
 import ProductDetails from './ProductDetails'
+import Search from './Components/search'
 
 export default class Navigation extends Component{
     constructor() {
@@ -36,6 +37,8 @@ export default class Navigation extends Component{
                 return(<Login navigator={ navigator } />)
             case 'Home':
                 return (<Home navigator={ navigator } />)
+            case 'Search':
+                return(<Search navigator = {navigator} />)
             case 'ProductDetails':
                 return (<ProductDetails navigator ={ navigator } />)
         }

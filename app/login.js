@@ -230,7 +230,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state.userId)
     return {
         userId: state.userId,
         email: state.email,

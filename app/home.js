@@ -104,6 +104,13 @@ class Home extends Component{
         )
     }
 
+    goToSearch(){
+        this.props.navigator.push({
+            title: 'Search',
+            id: 'Search'
+        })
+    }
+
     toggle(){
         this.setState({
             isOpen: !this.state.isOpen
@@ -122,7 +129,10 @@ class Home extends Component{
                     isOpen={this.state.isOpen}
                     onChange={(isOpen) => this.updateMenu(isOpen)}
                 >
-                    <Header toggle={this.toggle.bind(this)} />
+                    <Header 
+                        toggle={this.toggle.bind(this)} 
+                        goToSearch={this.goToSearch.bind(this)}
+                    />
                     <FlatList
                         horizontal={false}
                         data={this.state.homeData}

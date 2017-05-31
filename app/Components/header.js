@@ -3,28 +3,33 @@ import {
     Text,
     View,
     StyleSheet,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    TouchableHighlight
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const Header = props => (
-    <View style = {styles.container}>
-        <TouchableWithoutFeedback onPress={() => props.toggle()}>
-            <Icon
-                name = 'bars'
-                color = 'black'
-                size = {25}
-            />
-        </TouchableWithoutFeedback>
-        <Text>One Stop Click</Text>
-        <Icon
-            name= 'search'
-            color= 'black'
-            size = {25}
-        />
-    </View>
-)
+const Header = props => {
+    return(
+        <View style = {styles.container}>
+            <TouchableWithoutFeedback onPress={() => props.toggle()}>
+                <Icon
+                    name = 'bars'
+                    color = 'black'
+                    size = {25}
+                />
+            </TouchableWithoutFeedback>
+             <TouchableWithoutFeedback 
+                onPress={() => props.goToSearch()}>
+                <Icon
+                    name = 'search'
+                    color = 'black'
+                    size = {25}
+                />
+            </TouchableWithoutFeedback>
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     container:{
