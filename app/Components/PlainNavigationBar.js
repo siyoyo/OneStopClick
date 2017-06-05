@@ -17,6 +17,7 @@ import {
 
 const Rx = require('rx');
 const BackArrow = require('../../images/arrow_left_black.png');
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 class PlainNavigationBar extends Component {
     constructor(props) {
@@ -30,9 +31,10 @@ class PlainNavigationBar extends Component {
                     onPress={() => { this.props.navigator.pop() }}
                     style={styles.touchableArea}
                 >
-                    <Image
-                        source={BackArrow}
-                        style={styles.navIcon}
+                    <Icon
+                        name = 'arrow-left'
+                        color = 'black'
+                        size = {25}
                     />
                 </TouchableOpacity>
                 <Text>

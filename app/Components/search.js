@@ -4,12 +4,14 @@ import {
     Text,
     StyleSheet,
     TouchableWithoutFeedback,
+    TouchableOpacity,
     TextInput,
     Dimensions,
     FlatList,
     ScrollView,
     Image,
-    NetInfo
+    NetInfo,
+    Picker
 } from 'react-native'
 
 const {width, height} = Dimensions.get('window')
@@ -17,19 +19,46 @@ const background = require("../../images/background.jpg");
 const SearchService = require('../Api/SearchService');
 const Rx = require('rx');
 import Icon from 'react-native-vector-icons/FontAwesome'
+import ReactNativePicker from 'react-native-picker'
 
 class Search extends Component {
     constructor(props){
         super(props)
         this.state = {
-            text: '',
+            category: '',
+            searchText:'',
             data: '',
-            searchData: []
+            searchData: [],
+            categoryData:[],
+            isCatPickerShow: false
         }
     }
 
     static navigationOptions ={
         headerVisible: false
+    }
+
+    componentDidMount(){
+        NetInfo.addEventListener(
+            'change',
+            this._handleConnectionInfoChange
+        );
+
+        var source = this._checkConnection() 
+            .filter(isConnected => isConnected) //only attempt to get home product if connected
+            .flatMap(() => {
+                return Rx.Observable.fromPromise(SearchService.getCategory());
+            })
+
+        source.subscribe(
+            function(value){
+                this.setState({
+                    categoryData: value
+                })
+            }.bind(this),
+            e => console.log('error : ${e}'),
+            () => console.log('complete')
+        );
     }
 
     _checkConnection(){
@@ -78,40 +107,67 @@ class Search extends Component {
         )
     }
 
+    showCategory(){
+        ReactNativePicker.init({
+            pickerData: ['Food & Beverage', 'Grocey & Amenities', 'Healt', 'Entertainment', 'Transportation'],
+            selectedValue: [this.state.category],
+            onPickerConfirm: pickedValue => {
+                if (pickedValue[0] !== '') {
+                    this.setState({
+                        category: pickedValue[0]
+                    })
+                }
+            },
+            onPickerCancel: pickedValue => {
+                console.log('category cancel ', pickedValue)
+            },
+            onPickerSelect: pickedValue => {
+                console.log('category select ', pickedValue)
+            }
+        })
+        ReactNativePicker.show();
+        this.setCatPickerShow(true)
+    }
+
+    setCatPickerShow(isDisplayed){
+        this.setState({
+            isCatPickerShow : isDisplayed
+        })
+    }
+
     render(){
         return(
             <View style={styles.container}>
                 <View style ={ styles.header}>
-                    <Icon
-                        name= 'search'
-                        color='black'
-                        size = {18}
-                        style={styles.searchIcon}
-                    />
-                    <TextInput
-                        value={this.state.text}
-                        onChangeText={(text) => this.filter(text)}
-                        style={styles.input}
-                        placeholder='Search'
-                        placeholderTextColor='grey'
-                        keyboardAppearance='dark'
-                        autoFocus={true}
-                    />
-                    {this.state.text ?
-                    <TouchableWithoutFeedback 
-                        onPress={() => this.deleteData()}>
-                        <Icon
-                            name='times-circle'
-                            color='black'
-                            size={18}
-                            style={styles.iconInputClose}
+                    <TouchableOpacity onPress={this.showCategory.bind(this)}>
+                        <TextInput
+                            value={this.state.category}
+                            style={styles.categoryInput}
+                            placeholder='Category'
+                            placeholderTextColor='grey'
+                            editable={false}
                         />
-                    </TouchableWithoutFeedback>
-                    : null }
+                    </TouchableOpacity>
                     <TouchableWithoutFeedback style={styles.cancelButton}
                         onPress={() => this.props.navigator.pop()}>
                         <View style={styles.containerButton}>
                             <Text style={styles.cancelButtonText}>Cancel</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
+                <View style={styles.headerSearch}>
+                    <TextInput
+                        value={this.state.searchText}
+                        onChangeText={(searchText) => this.setState({searchText})}
+                        style={styles.input}
+                        placeholder='Search'
+                        placeholderTextColor='grey'
+                        editable={true}
+                    />
+                    <TouchableWithoutFeedback style={styles.cancelButton}
+                        onPress={() => this.props.navigator.pop()}>
+                        <View style={styles.containerSubmitButton}>
+                            <Text style={styles.cancelButtonText}>Search</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
@@ -135,19 +191,26 @@ const styles = StyleSheet.create({
         // backgroundColor: '#181818'
     },
     header: {
-        height: 40,
-        // backgroundColor: '#181818',
-        borderBottomWidth: 1,
+        height: 60,
+        backgroundColor: '#DEB887',
         borderColor: '#3a3a3a',
         paddingBottom: 5,
-        marginTop: 20,
         flexDirection: 'row',
         alignItems: 'center',
         position: 'relative'
     },
+    headerSearch:{
+        height: 60,
+        backgroundColor: '#DEB887',
+        borderColor: '#3a3a3a',
+        paddingBottom: 5,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        borderBottomWidth: 1,
+    },
     searchIcon: {
         position: 'absolute',
-        top: 5,
+        top: 25,
         left: 15,
         zIndex: 1,
         backgroundColor:'transparent'
@@ -159,19 +222,45 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         zIndex: 1
     },
+    categoryInput:{
+        width: width - (width / 4),
+        height: 30,
+        backgroundColor: '#f0f0f0',
+        marginHorizontal: 10,
+        paddingLeft: 30,
+        marginTop:20,
+        borderRadius: 3,
+    },
     input: {
         width: width - (width / 4),
         height: 30,
-        backgroundColor: '#d3d3d3',
+        backgroundColor: '#f0f0f0',
+        borderRadius: 3,
         marginHorizontal: 10,
         paddingLeft: 30,
-        borderRadius: 3,
-        color: 'grey'
     },
     containerButton:{
-        width: 60,
+        width: 50,
         height: 30,
-        backgroundColor:'#d3d3d3'
+        marginTop:15,
+        backgroundColor:'#f0f0f0',
+        borderBottomLeftRadius: 3,
+        borderBottomRightRadius:3,
+        borderTopLeftRadius:3,
+        borderTopRightRadius:5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+     containerSubmitButton:{
+        width: 50,
+        height: 30,
+        backgroundColor:'#f0f0f0',
+        borderBottomLeftRadius: 3,
+        borderBottomRightRadius:3,
+        borderTopLeftRadius:3,
+        borderTopRightRadius:5,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     cancelButtonText: {
         color: 'black',
