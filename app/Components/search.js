@@ -8,11 +8,14 @@ import {
     Dimensions,
     FlatList,
     ScrollView,
-    Image
+    Image,
+    NetInfo
 } from 'react-native'
 
 const {width, height} = Dimensions.get('window')
 const background = require("../../images/background.jpg");
+const SearchService = require('../Api/SearchService');
+const Rx = require('rx');
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 class Search extends Component {
@@ -20,7 +23,8 @@ class Search extends Component {
         super(props)
         this.state = {
             text: '',
-            data: ''
+            data: '',
+            searchData: []
         }
     }
 
@@ -28,8 +32,41 @@ class Search extends Component {
         headerVisible: false
     }
 
-    filter(text){
+    _checkConnection(){
+        return Rx.Observable.create(observer => {
+            NetInfo.isConnected.fetch().then(isConnected => {
+                if (isConnected) {
+                    observer.next(isConnected);
+                    observer.onCompleted();
+                }
+                else {
+                    observer.error("no internet connection")
+                }
+            });
+        });
+    }
 
+    filter(text){
+        NetInfo.addEventListener(
+            'change',
+            this._handleConnectionInfoChange
+        );
+
+        var source = this._checkConnection() 
+            .filter(isConnected => isConnected) //only attempt to get home product if connected
+            .flatMap(() => {
+                return Rx.Observable.fromPromise(SearchService.searchProduct());
+            })
+
+        source.subscribe(
+            function(value){
+                this.setState({
+                    searchData: value
+                })
+            }.bind(this),
+            e => console.log('error : ${e}'),
+            () => console.log('complete')
+        );
     }
 
     _renderItem(item){
