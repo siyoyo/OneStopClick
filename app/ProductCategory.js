@@ -33,7 +33,7 @@ class ProductBoxRow extends Component {
                         horizontal={this.props.horizontal}
                         ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
                         data={this.props.category.products}
-                        renderItem={({ item }) => <ProductBox product={item} />}
+                        renderItem={({ item }) => <ProductBox product={item} navigator={this.props.navigator} />}
                     />
                 </View>
                 <View style={{ height: 10 }} />

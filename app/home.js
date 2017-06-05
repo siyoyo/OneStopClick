@@ -133,7 +133,7 @@ class Home extends Component{
                         toggle={this.toggle.bind(this)} 
                         goToSearch={this.goToSearch.bind(this)}
                     />
-                    <ProductCategories categories={this.state.homeData} />
+                    <ProductCategories categories={this.state.homeData} navigator={this.props.navigator}/>
                 </SideMenu>
             </View>
         )

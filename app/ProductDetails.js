@@ -15,6 +15,7 @@ import {
 } from 'react-native'
 
 const Rx = require('rx');
+const PlainNavigationBar = require('./Components/PlainNavigationBar');
 
 class ProductDetails extends Component {
     constructor(props) {
@@ -23,7 +24,10 @@ class ProductDetails extends Component {
 
     render() {
         return (
-            <View>Detailss</View>
+            <View>
+                <PlainNavigationBar navigator={this.props.navigator} hasRightImage={false}/>
+                <Text>Detailss</Text>
+            </View>
         )
     }
 }

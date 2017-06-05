@@ -32,6 +32,7 @@ class ProductCategories extends Component {
                     renderItem={({ item }) => <ProductCategory
                         category={item}
                         horizontal={true}
+                        navigator={this.props.navigator}
                     />}
                 />
             </View>
