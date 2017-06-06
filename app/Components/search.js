@@ -76,24 +76,21 @@ class Search extends Component {
         });
     }
 
-    _search(searchText, categoryId){
-        NetInfo.addEventListener(
-            'change',
-            this._handleConnectionInfoChange
-        );
-            var source = this._checkConnection()
+    _search() {
+
+        var source = this._checkConnection()
             .filter(isConnected => isConnected)
             .flatMap(() => {
-                return Rx.Observable.fromPromise(SearchService.searchProduct(categoryId, searchText));
+                return Rx.Observable.fromPromise(SearchService.searchProduct(this.state.categoryId, this.state.searchText));
             })
 
         source.subscribe(
-            function(value){
+            function (value) {
                 this.setState({
                     searchData: value.data
                 })
             }.bind(this),
-            e => console.log('error : ${e}'),
+            e => console.log(`error : ${e}`),
             () => console.log('complete')
         );
     }
@@ -190,7 +187,7 @@ class Search extends Component {
                         editable={true}
                     />
                     <TouchableWithoutFeedback style={styles.cancelButton}
-                        onPress={this._search.bind(this.state.searchText, this.state.categoryId)}>
+                        onPress={() => this._search()}>
                         <View style={styles.containerSubmitButton}>
                             <Text style={styles.cancelButtonText}>Search</Text>
                         </View>
