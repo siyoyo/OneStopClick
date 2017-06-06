@@ -20,6 +20,7 @@ const SearchService = require('../Api/SearchService');
 const Rx = require('rx');
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ReactNativePicker from 'react-native-picker'
+const ProductCategories = require('../ProductCategories');
 
 class Search extends Component {
     constructor(props){
@@ -75,7 +76,7 @@ class Search extends Component {
         });
     }
 
-    filter(text){
+    filter(searchText, categoryId){
         NetInfo.addEventListener(
             'change',
             this._handleConnectionInfoChange
@@ -84,7 +85,7 @@ class Search extends Component {
         var source = this._checkConnection() 
             .filter(isConnected => isConnected) //only attempt to get home product if connected
             .flatMap(() => {
-                return Rx.Observable.fromPromise(SearchService.searchProduct());
+                return Rx.Observable.fromPromise(SearchService.searchProduct(categoryId, searchText));
             })
 
         source.subscribe(
@@ -107,16 +108,40 @@ class Search extends Component {
         )
     }
 
+    _pickerDataText(categoryData){
+        var categoryDataText = []
+        for (var index = 0; index < categoryData.length; index++) {
+            var element = categoryData[index]
+            categoryDataText.push(element.text)
+        }
+        return categoryDataText
+    }
+
+    _pickerDataId(category){
+        for (var index = 0; index < this.state.categoryData.data.length; index++) {
+            var categoryText = this.state.categoryData.data[index].text
+            var categoryTextId = this.state.categoryData.data[index].id
+
+            if (category === categoryText){
+                this.setState({
+                    categoryId : categoryTextId
+                })
+            }
+        }
+    }
+
     showCategory(){
         console.log(this.state.categoryData.data)
+        console.log(this._pickerDataText(this.state.categoryData.data))
         ReactNativePicker.init({
-            pickerData: [this.state.categoryData.data.text],
+            pickerData: this._pickerDataText(this.state.categoryData.data),
             selectedValue: [this.state.category],
             onPickerConfirm: pickedValue => {
                 if (pickedValue[0] !== '') {
                     this.setState({
                         category: pickedValue[0]
                     })
+                    this._pickerDataId(this.state.category)
                 }
             },
             onPickerCancel: pickedValue => {
@@ -166,20 +191,14 @@ class Search extends Component {
                         editable={true}
                     />
                     <TouchableWithoutFeedback style={styles.cancelButton}
-                        onPress={() => this.props.navigator.pop()}>
+                        onPress={this.filter(this.state.searchText, this.state.categoryId)}>
                         <View style={styles.containerSubmitButton}>
                             <Text style={styles.cancelButtonText}>Search</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
                 <ScrollView>
-                    <FlatList
-                        style={{marginHorizontal: 5}}
-                        data={this.state.data}
-                        numColumns={3}
-                        columnWrapperStyle={{marginTop: 5, marginLeft: 5}}
-                        renderItem={({item}) => this._renderItem(item)}
-                    />
+                    <ProductCategories categories={this.state.category} navigator={this.props.navigator}/>
                 </ScrollView>
             </View>
         )
