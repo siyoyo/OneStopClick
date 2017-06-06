@@ -11,10 +11,11 @@ import {
     ScrollView,
     Image,
     NetInfo,
-    Picker
+    Picker,
+    ActivityIndicator
 } from 'react-native'
 
-const {width, height} = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 const background = require("../../images/background.jpg");
 const SearchService = require('../Api/SearchService');
 const Rx = require('rx');
@@ -23,36 +24,64 @@ import ReactNativePicker from 'react-native-picker'
 const Products = require('../Products');
 
 class Search extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             categoryId: '',
-            searchText:'',
+            searchText: '',
             data: '',
             searchData: [],
-            categoryData:[],
-            isCatPickerShow: false
+            categoryData: [],
+            isCatPickerShow: false,
+            isSearching: false
         }
     }
 
-    static navigationOptions ={
+    static navigationOptions = {
         headerVisible: false
     }
 
-    componentDidMount(){
+    componentWillMount() {
+        this._componentWillUnmountStream = new Rx.Subject();
+        this._searchBtnPressStream = new Rx.Subject();
+
+        this._searchBtnPressStream
+            .takeUntil(this._componentWillUnmountStream)
+            .filter(() => {
+                console.log("search button pressed");
+                return !this.state.isSearching; // only continue if not searching yet
+            })
+            .flatMap(() => {
+                console.log("checking connection for search");
+                return this._checkConnection();
+            })
+            .filter(isConnected => isConnected)
+            .doOnNext(() => {
+                this.setState({ isSearching: true });
+            })
+            .flatMap(() => {
+                return Rx.Observable.fromPromise(SearchService.searchProduct(this.state.categoryId, this.state.searchText));
+            })
+            .subscribe(
+            (value) => this._onSearchSuccess(value),
+            () => this._onSearchFail(),
+            () => this._onComplete());
+    }
+
+    componentDidMount() {
         NetInfo.addEventListener(
             'change',
             this._handleConnectionInfoChange
         );
 
-        var source = this._checkConnection() 
+        var source = this._checkConnection()
             .filter(isConnected => isConnected) //only attempt to get home product if connected
             .flatMap(() => {
                 return Rx.Observable.fromPromise(SearchService.getCategory());
             })
 
         source.subscribe(
-            function(value){
+            function (value) {
                 this.setState({
                     categoryData: value
                 })
@@ -62,7 +91,28 @@ class Search extends Component {
         );
     }
 
-    _checkConnection(){
+    _onSearchSuccess(value) {
+        console.log(`search success with data: ${value}`);
+        this.setState({
+            searchData: value,
+            isSearching: false
+        });
+    }
+
+    _onSearchFail() {
+        console.log(`error : ${e}`)
+    }
+
+    _onComplete() {
+        console.log('stream complete')
+    }
+
+    componentWillUnmount() {
+        this._componentWillUnmountStream.onNext(null);
+        this._componentWillUnmountStream.onCompleted();
+    }
+
+    _checkConnection() {
         return Rx.Observable.create(observer => {
             NetInfo.isConnected.fetch().then(isConnected => {
                 if (isConnected) {
@@ -76,35 +126,7 @@ class Search extends Component {
         });
     }
 
-    _search() {
-
-        var source = this._checkConnection()
-            .filter(isConnected => isConnected)
-            .flatMap(() => {
-                return Rx.Observable.fromPromise(SearchService.searchProduct(this.state.categoryId, this.state.searchText));
-            })
-
-        source.subscribe(
-            function (value) {
-                this.setState({
-                    searchData: value
-                })
-            }.bind(this),
-            e => console.log(`error : ${e}`),
-            () => console.log('complete')
-        );
-    }
-
-    _renderItem(item){
-        const{navigate} = this.props.navigation
-        return(
-            <TouchableWithoutFeedback onPress={() => navigate('Details', {item:item})}>
-                <Image style={{width:120, height:180}} source={background} />
-            </TouchableWithoutFeedback>
-        )
-    }
-
-    _pickerDataText(categoryData){
+    _pickerDataText(categoryData) {
         var categoryDataText = []
         for (var index = 0; index < categoryData.length; index++) {
             var element = categoryData[index]
@@ -113,20 +135,20 @@ class Search extends Component {
         return categoryDataText
     }
 
-    _pickerDataId(category){
+    _pickerDataId(category) {
         for (var index = 0; index < this.state.categoryData.data.length; index++) {
             var categoryText = this.state.categoryData.data[index].text
             var categoryTextId = this.state.categoryData.data[index].id
 
-            if (category === categoryText){
+            if (category === categoryText) {
                 this.setState({
-                    categoryId : categoryTextId
+                    categoryId: categoryTextId
                 })
             }
         }
     }
 
-    showCategory(){
+    showCategory() {
         console.log(this.state.categoryData.data)
         console.log(this._pickerDataText(this.state.categoryData.data))
         ReactNativePicker.init({
@@ -151,16 +173,16 @@ class Search extends Component {
         this.setCatPickerShow(true)
     }
 
-    setCatPickerShow(isDisplayed){
+    setCatPickerShow(isDisplayed) {
         this.setState({
-            isCatPickerShow : isDisplayed
+            isCatPickerShow: isDisplayed
         })
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <View style={styles.container}>
-                <View style ={ styles.header}>
+                <View style={styles.header}>
                     <TouchableOpacity onPress={this.showCategory.bind(this)}>
                         <TextInput
                             value={this.state.category}
@@ -180,21 +202,25 @@ class Search extends Component {
                 <View style={styles.headerSearch}>
                     <TextInput
                         value={this.state.searchText}
-                        onChangeText={(searchText) => this.setState({searchText})}
+                        onChangeText={(searchText) => this.setState({ searchText })}
                         style={styles.input}
                         placeholder='Search'
                         placeholderTextColor='grey'
                         editable={true}
                     />
                     <TouchableWithoutFeedback style={styles.cancelButton}
-                        onPress={() => this._search()}>
+                        onPress={() => this._searchBtnPressStream.onNext(null)}>
                         <View style={styles.containerSubmitButton}>
                             <Text style={styles.cancelButtonText}>Search</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
                 <ScrollView>
-                    <Products products={this.state.searchData} horizontal={true} navigator={this.props.navigator}/>
+                    {
+                        this.state.isSearching ?
+                            <ActivityIndicator style={[styles.centering]} />
+                            : <Products products={this.state.searchData} horizontal={true} navigator={this.props.navigator} />
+                    }
                 </ScrollView>
             </View>
         )
@@ -215,7 +241,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
-    headerSearch:{
+    headerSearch: {
         height: 60,
         backgroundColor: '#DEB887',
         borderColor: '#3a3a3a',
@@ -229,7 +255,7 @@ const styles = StyleSheet.create({
         top: 25,
         left: 15,
         zIndex: 1,
-        backgroundColor:'transparent'
+        backgroundColor: 'transparent'
     },
     iconInputClose: {
         position: 'absolute',
@@ -238,13 +264,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         zIndex: 1
     },
-    categoryInput:{
+    categoryInput: {
         width: width - (width / 4),
         height: 30,
         backgroundColor: '#f0f0f0',
         marginHorizontal: 10,
         paddingLeft: 30,
-        marginTop:20,
+        marginTop: 20,
         borderRadius: 3,
     },
     input: {
@@ -255,26 +281,26 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         paddingLeft: 30,
     },
-    containerButton:{
+    containerButton: {
         width: 50,
         height: 30,
-        marginTop:15,
-        backgroundColor:'#f0f0f0',
+        marginTop: 15,
+        backgroundColor: '#f0f0f0',
         borderBottomLeftRadius: 3,
-        borderBottomRightRadius:3,
-        borderTopLeftRadius:3,
-        borderTopRightRadius:5,
+        borderBottomRightRadius: 3,
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },
-     containerSubmitButton:{
+    containerSubmitButton: {
         width: 50,
         height: 30,
-        backgroundColor:'#f0f0f0',
+        backgroundColor: '#f0f0f0',
         borderBottomLeftRadius: 3,
-        borderBottomRightRadius:3,
-        borderTopLeftRadius:3,
-        borderTopRightRadius:5,
+        borderBottomRightRadius: 3,
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -287,7 +313,12 @@ const styles = StyleSheet.create({
         marginRight: 5,
         width: 115,
         height: 170
-    }
+    },
+    centering: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 8,
+    },
 })
 
 export default Search
