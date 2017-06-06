@@ -25,7 +25,7 @@ class Search extends Component {
     constructor(props){
         super(props)
         this.state = {
-            category: '',
+            categoryId: '',
             searchText:'',
             data: '',
             searchData: [],
@@ -57,7 +57,7 @@ class Search extends Component {
                 })
             }.bind(this),
             e => console.log('error : ${e}'),
-            () => console.log('complete')
+            () => console.log(this.state.categoryData)
         );
     }
 
@@ -90,7 +90,7 @@ class Search extends Component {
         source.subscribe(
             function(value){
                 this.setState({
-                    searchData: value
+                    searchData: value.data
                 })
             }.bind(this),
             e => console.log('error : ${e}'),
@@ -108,8 +108,9 @@ class Search extends Component {
     }
 
     showCategory(){
+        console.log(this.state.categoryData.data)
         ReactNativePicker.init({
-            pickerData: ['Food & Beverage', 'Grocey & Amenities', 'Healt', 'Entertainment', 'Transportation'],
+            pickerData: [this.state.categoryData.data.text],
             selectedValue: [this.state.category],
             onPickerConfirm: pickedValue => {
                 if (pickedValue[0] !== '') {
