@@ -76,14 +76,13 @@ class Search extends Component {
         });
     }
 
-    filter(searchText, categoryId){
+    _search(searchText, categoryId){
         NetInfo.addEventListener(
             'change',
             this._handleConnectionInfoChange
         );
-
-        var source = this._checkConnection() 
-            .filter(isConnected => isConnected) //only attempt to get home product if connected
+            var source = this._checkConnection()
+            .filter(isConnected => isConnected)
             .flatMap(() => {
                 return Rx.Observable.fromPromise(SearchService.searchProduct(categoryId, searchText));
             })
@@ -191,7 +190,7 @@ class Search extends Component {
                         editable={true}
                     />
                     <TouchableWithoutFeedback style={styles.cancelButton}
-                        onPress={this.filter(this.state.searchText, this.state.categoryId)}>
+                        onPress={this._search.bind(this.state.searchText, this.state.categoryId)}>
                         <View style={styles.containerSubmitButton}>
                             <Text style={styles.cancelButtonText}>Search</Text>
                         </View>
