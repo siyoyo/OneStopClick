@@ -4,6 +4,7 @@ const APIManager = require('./APIManager');
 const ErrorMessages = require('../Util/ErrorMessages');
 const _ = require("underscore");
 const Rx = require('rx');
+const ProductStore = require('../Store/ProductStore');
 
 const ProductService = Object.assign({}, APIManager, {
     getIndex: function () {
@@ -17,8 +18,8 @@ const ProductService = Object.assign({}, APIManager, {
             });
     },
 
-    getDetails: function (productId) {
-        var url = this.constructUrl('api/product/details/') + productId;
+    getDetails: function () {
+        var url = this.constructUrl('api/product/details/') + ProductStore.getState().selectedProduct.productId;
         const options = this.setupOptionsAuth("get");
         return fetch(url, options)
             .then(this.checkResponse)

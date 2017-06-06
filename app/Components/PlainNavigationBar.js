@@ -29,7 +29,7 @@ class PlainNavigationBar extends Component {
             <View style={styles.container}>
                 <TouchableOpacity
                     onPress={() => { this.props.navigator.pop() }}
-                    style={styles.touchableArea}
+                    style={styles.navIconLeft}
                 >
                     <Icon
                         name = 'arrow-left'
@@ -38,7 +38,7 @@ class PlainNavigationBar extends Component {
                     />
                 </TouchableOpacity>
                 <Text>
-                    {this.props.navigator.title}
+                    {this.props.title}
                 </Text>
                 {this.props.hasRightImage ?
                     <TouchableOpacity
@@ -51,7 +51,7 @@ class PlainNavigationBar extends Component {
                             style={styles.navIcon}
                         />
                     </TouchableOpacity>
-                    : null
+                    : <View style={{ width:25, paddingRight: 15}}></View>
                 }
             </View>
         )
@@ -66,11 +66,11 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: "#DEB887",
+        paddingTop: 10
     },
-    navIcon: {
-        height: 30,
-        width: 30
-    },
+    navIconLeft: {
+        paddingLeft: 15
+    }
 });
 
 module.exports = PlainNavigationBar;

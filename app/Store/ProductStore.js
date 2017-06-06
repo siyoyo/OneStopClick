@@ -12,7 +12,7 @@ const reducer = (state = defaultState, action) => {
             return {
                 ...state,
                 selectedProduct: {
-                    username: action.productId || state.productId
+                    productId: action.productId || state.productId
                 }
             }
         default:
