@@ -20,7 +20,7 @@ const SearchService = require('../Api/SearchService');
 const Rx = require('rx');
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ReactNativePicker from 'react-native-picker'
-const ProductCategories = require('../ProductCategories');
+const Products = require('../Products');
 
 class Search extends Component {
     constructor(props){
@@ -87,7 +87,7 @@ class Search extends Component {
         source.subscribe(
             function (value) {
                 this.setState({
-                    searchData: value.data
+                    searchData: value
                 })
             }.bind(this),
             e => console.log(`error : ${e}`),
@@ -194,7 +194,7 @@ class Search extends Component {
                     </TouchableWithoutFeedback>
                 </View>
                 <ScrollView>
-                    <ProductCategories categories={this.state.category} navigator={this.props.navigator}/>
+                    <Products products={this.state.searchData} horizontal={true} navigator={this.props.navigator}/>
                 </ScrollView>
             </View>
         )

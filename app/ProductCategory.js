@@ -4,22 +4,13 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
     Navigator,
-    AsyncStorage,
-    ActivityIndicator,
-    Alert,
-    FlatList
 } from 'react-native'
 
 const Rx = require('rx');
-const background = require("../images/background.jpg");
-const ProductBox = require("./ProductBox");
+const Products = require("./Products");
 
-class ProductBoxRow extends Component {
+class ProductCategory extends Component {
     constructor(props) {
         super(props)
     }
@@ -29,12 +20,7 @@ class ProductBoxRow extends Component {
             <View style={{ marginLeft: 10, marginTop: 10, backgroundColor: "#FFFFFF"}} >
                 <View style={{ margin: 10 }}>
                     <Text style={{ fontWeight: 'bold', paddingBottom: 5 }}>{this.props.category.name}</Text>
-                    <FlatList
-                        horizontal={this.props.horizontal}
-                        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-                        data={this.props.category.products}
-                        renderItem={({ item }) => <ProductBox product={item} navigator={this.props.navigator} />}
-                    />
+                    <Products horizontal={this.props.horizontal} products={this.props.category.products} navigator={this.props.navigator} />
                 </View>
                 <View style={{ height: 10 }} />
             </View >
@@ -42,4 +28,4 @@ class ProductBoxRow extends Component {
     }
 }
 
-module.exports = ProductBoxRow;
+module.exports = ProductCategory;
