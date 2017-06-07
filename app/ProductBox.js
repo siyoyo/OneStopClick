@@ -31,7 +31,14 @@ class ProductBox extends Component {
                     productId: this.props.product.id,
                     type: 'UPDATE_SELECTED_PRODUCT'
                 });
-                this.props.navigator.push({ title: this.props.product.product_name, id: 'ProductDetails'});
+                this.props.navigator.push({ 
+                    title: this.props.product.product_name, 
+                    id: 'ProductDetails',
+                    price: this.props.product.price,
+                    description: this.props.product.description,
+                    urlDownload: this.props.product.urldownload,
+                    category: this.props.name
+                });
             }}>
                 <View style={{ width: 120 }}>
                     <ImageLoad
