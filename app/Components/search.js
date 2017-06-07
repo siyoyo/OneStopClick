@@ -22,6 +22,7 @@ const Rx = require('rx');
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ReactNativePicker from 'react-native-picker'
 const Products = require('../Products');
+const DismissKeyboard = require('dismissKeyboard');
 
 class Search extends Component {
     constructor(props) {
@@ -57,6 +58,7 @@ class Search extends Component {
             })
             .filter(isConnected => isConnected)
             .doOnNext(() => {
+                DismissKeyboard();
                 this.setState({ isSearching: true });
             })
             .flatMap(() => {
@@ -64,7 +66,7 @@ class Search extends Component {
             })
             .subscribe(
             (value) => this._onSearchSuccess(value),
-            () => this._onSearchFail(),
+            (error) => this._onSearchFail(error),
             () => this._onComplete());
     }
 
@@ -99,8 +101,8 @@ class Search extends Component {
         });
     }
 
-    _onSearchFail() {
-        console.log(`error : ${e}`)
+    _onSearchFail(error) {
+        console.log(`error : ${error}`)
     }
 
     _onComplete() {
@@ -153,7 +155,6 @@ class Search extends Component {
         console.log(this._pickerDataText(this.state.categoryData.data))
         ReactNativePicker.init({
             pickerData: this._pickerDataText(this.state.categoryData.data),
-            selectedValue: [this.state.category],
             onPickerConfirm: pickedValue => {
                 if (pickedValue[0] !== '') {
                     this.setState({
@@ -179,6 +180,23 @@ class Search extends Component {
         })
     }
 
+    _renderProduct() {
+        if (this.state.isSearching) {
+            return <ActivityIndicator style={[styles.centering]} />
+        }
+        else if (this.state.searchData.length > 0) {
+            return <Products products={this.state.searchData}
+                horizontal={false}
+                navigator={this.props.navigator}
+                containerStyle={styles.productsContainer}
+                productBoxContainerStyle={styles.productBoxContainerStyle} />
+        }
+        else
+        {
+            return null
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -187,24 +205,24 @@ class Search extends Component {
                         <TextInput
                             value={this.state.category}
                             style={styles.categoryInput}
-                            placeholder='Category'
+                            placeholder='Choose Category'
                             placeholderTextColor='grey'
                             editable={false}
                         />
                     </TouchableOpacity>
-                    <TouchableWithoutFeedback style={styles.cancelButton}
+                    <TouchableOpacity activeOpacity={0.5} style={styles.cancelButton}
                         onPress={() => this.props.navigator.pop()}>
                         <View style={styles.containerButton}>
                             <Text style={styles.cancelButtonText}>Cancel</Text>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.headerSearch}>
                     <TextInput
                         value={this.state.searchText}
                         onChangeText={(searchText) => this.setState({ searchText })}
                         style={styles.input}
-                        placeholder='Search'
+                        placeholder='Search Text (name or desc)'
                         placeholderTextColor='grey'
                         editable={true}
                     />
@@ -215,12 +233,8 @@ class Search extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
-                <ScrollView>
-                    {
-                        this.state.isSearching ?
-                            <ActivityIndicator style={[styles.centering]} />
-                            : <Products products={this.state.searchData} horizontal={true} navigator={this.props.navigator} />
-                    }
+                <ScrollView style={styles.scrollView}>
+                    {this._renderProduct()}
                 </ScrollView>
             </View>
         )
@@ -269,45 +283,40 @@ const styles = StyleSheet.create({
         height: 30,
         backgroundColor: '#f0f0f0',
         marginHorizontal: 10,
-        paddingLeft: 30,
+        paddingLeft: 15,
         marginTop: 20,
-        borderRadius: 3,
+        fontSize: 14
     },
     input: {
         width: width - (width / 4),
         height: 30,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 3,
+        backgroundColor: '#ffffff',
         marginHorizontal: 10,
-        paddingLeft: 30,
+        paddingLeft: 15,
+        fontSize: 14
     },
     containerButton: {
-        width: 50,
+        width: 60,
         height: 30,
-        marginTop: 15,
-        backgroundColor: '#f0f0f0',
-        borderBottomLeftRadius: 3,
-        borderBottomRightRadius: 3,
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 5,
+        marginTop: 20,
+        backgroundColor: '#fefeff',
+        borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },
     containerSubmitButton: {
-        width: 50,
+        width: 60,
         height: 30,
-        backgroundColor: '#f0f0f0',
-        borderBottomLeftRadius: 3,
-        borderBottomRightRadius: 3,
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 5,
+        backgroundColor: '#fefeff',
+        borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },
     cancelButtonText: {
         color: 'black',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        fontSize: 14
     },
     image: {
         marginRight: 5,
@@ -319,6 +328,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 8,
     },
+    scrollView: {
+        backgroundColor: '#ffffff',
+    },
+    productsContainer: {
+        margin: 15,
+        backgroundColor: '#ffffff',
+                borderWidth: 1,
+        borderColor: '#F0F0F0'
+    },
+    productBoxContainerStyle: {
+        padding: 15
+    }
+
 })
 
 export default Search

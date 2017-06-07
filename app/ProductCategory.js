@@ -19,7 +19,7 @@ class ProductCategory extends Component {
         return (
             <View style={{ marginLeft: 10, marginTop: 10, backgroundColor: "#FFFFFF"}} >
                 <View style={{ margin: 10 }}>
-                    <Text style={{ fontWeight: 'bold', paddingBottom: 5 }}>{this.props.category.name}</Text>
+                    <Text style={{ fontWeight: '600', fontSize: 14, paddingBottom: 10 }}>{this.props.category.name}</Text>
                     <Products horizontal={this.props.horizontal} products={this.props.category.products} navigator={this.props.navigator} />
                 </View>
                 <View style={{ height: 10 }} />
