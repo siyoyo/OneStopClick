@@ -87,9 +87,7 @@ class ProductDetails extends Component {
     }
 
     _valueChanged(rating){
-        this.setState({
-            userRating: rating
-        })
+        console.log(rating)
     }
 
     render() {
@@ -105,19 +103,23 @@ class ProductDetails extends Component {
                             <Text style={styles.descriptionText} numberOfLines={0}>{this.state.product.description}</Text>
                             <TouchableOpacity style={styles.buttonTouch}>
                                 <View style={styles.buttonContainer}>
-                                <Text style={styles.buttonText}>{this.state.product.price}</Text>
-                            </View>
+                                    <Text style={styles.buttonText}>{this.state.product.price}</Text>
+                                </View>
                         </TouchableOpacity>
                         </View>
+                    </View>
+                    <View style={styles.rateView}>
+                        <Text style={styles.rateText}> Rate Now! </Text>
                         <StarRating 
                             maxStars={5}
                             rating={0}
                             selectStar={require('../images/select_star.png')}
                             unSelectStar={require('../images/unselect_star.png')}
-                            valueChanged={this._valueChanged}
-                            starSize={30}
+                            starSize={50}
+                            interitemSpacing={20}
                         />
                     </View>
+                     
                 </ScrollView>
             </View>
         )
@@ -127,22 +129,25 @@ class ProductDetails extends Component {
 const styles = StyleSheet.create({
     thumbnail:{
         width: width,
-        height: 300
+        height: 300,
     },
     icon:{
         width: 70,
         height:70,
         marginTop: 10,
-        marginLeft: 10
+        marginLeft: 10,
+        borderRadius: 10
     },
     container:{
-        flex :1
+        flex :1,
+        width: width,
+        flexDirection : 'column'
     },
     buttonTouch:{
         alignItems: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        marginRight: 10
+        padding: 10
     },
     buttonContainer:{
         width: 80,
@@ -158,23 +163,38 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         padding: 10,
+        flexWrap: 'wrap',
+        width : width - 100
     },
     descriptionText:{
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center',
-        padding: 10
+        marginLeft: 10,
+        width: width - 100
     },
     details:{
         alignItems: 'flex-start',
         flexDirection:'row',
-        marginRight: 20,
+        borderBottomWidth:1,
+        borderColor: '#3a3a3a'
     },
     detailsText:{
         marginLeft: 10,
         flexDirection: 'column',
         alignItems: 'flex-start',
-        marginRight: 10
+        flexWrap: 'wrap',
+        marginRight: 10,
+        width :width - 100
+    },
+    rateText:{
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginBottom: 10
+    },
+    rateView : {
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
 

@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
     productsContainer: {
         margin: 15,
         backgroundColor: '#ffffff',
-                borderWidth: 1,
+        borderWidth: 1,
         borderColor: '#F0F0F0'
     },
     productBoxContainerStyle: {
