@@ -87,14 +87,18 @@ class Login extends Component{
                     refreshToken: response.refreshToken
                 }
             })
-            .doOnNext((response) => {
+            .subscribe(
+            function (response) {
                 UserStore.dispatch({
                     accessToken: response.accessToken,
                     type: 'UPDATE_ACCESS_TOKEN'
                 });
-            })
-            .subscribe(
-            function (response) {
+
+                UserStore.dispatch({
+                    username: this.state.email,
+                    type: 'LOGIN'
+                });
+
                 this.props.navigator.replace({
                     title: 'Home',
                     id: 'Home'

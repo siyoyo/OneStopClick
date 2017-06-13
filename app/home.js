@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import{
+import {
     AppRegistry,
     StyleSheet,
     Text,
@@ -36,10 +36,10 @@ const ErrorAlert = require("./Util/ErrorAlert");
 const Config = require('./config');
 const ProductCategories = require('./ProductCategories');
 
-class Home extends Component{
-    constructor(props){
+class Home extends Component {
+    constructor(props) {
         super(props)
-        this.state ={
+        this.state = {
             loading: false,
             email: '',
             password: '',
@@ -59,14 +59,14 @@ class Home extends Component{
     }
 
     _getHomeProducts() {
-        var source = this._checkConnection() 
+        var source = this._checkConnection()
             .filter(isConnected => isConnected) //only attempt to get home product if connected
             .flatMap(() => {
                 return Rx.Observable.fromPromise(HomeService.getIndex());
             })
 
         source.subscribe(
-            function(value){
+            function (value) {
                 this.setState({
                     homeData: value
                 })
@@ -76,7 +76,7 @@ class Home extends Component{
         );
     }
 
-    _checkConnection(){
+    _checkConnection() {
         return Rx.Observable.create(observer => {
             NetInfo.isConnected.fetch().then(isConnected => {
                 if (isConnected) {
@@ -98,96 +98,99 @@ class Home extends Component{
         );
     }
 
-    _renderItem(item){
+    _renderItem(item) {
         return (
-             <ProductBox />
+            <ProductBox />
         )
     }
 
-    goToSearch(){
+    goToSearch() {
         this.props.navigator.push({
             title: 'Search',
             id: 'Search'
         })
     }
 
-    toggle(){
+    toggle() {
         this.setState({
             isOpen: !this.state.isOpen
         })
     }
 
-    updateMenu(isOpen){
-        this.setState({isOpen})
+    updateMenu(isOpen) {
+        this.setState({ isOpen })
     }
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: "#F0F0F0", paddingBottom: 20 }}>
-                <SideMenu
-                    menu={<Menu />}
-                    isOpen={this.state.isOpen}
-                    onChange={(isOpen) => this.updateMenu(isOpen)}
-                >
+
+            <SideMenu
+                menu={<Menu />}
+                isOpen={this.state.isOpen}
+                onChange={(isOpen) => this.updateMenu(isOpen)}
+            >
+                <View style={styles.container}>
                     <Header
-                        toggle={this.toggle.bind(this)} 
+                        toggle={this.toggle.bind(this)}
                         goToSearch={this.goToSearch.bind(this)}
                     />
                     <ProductCategories categories={this.state.homeData} navigator={this.props.navigator}/>
-                </SideMenu>
-            </View>
+                </View>
+            </SideMenu>
         )
     }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  background: {
-      backgroundColor: '#A6A6A6'
-  },
-  inputWrap:{
-      flexDirection: "row",
-      marginVertical: 10,
-      height: 40,
-      backgroundColor:"transparent"
-  },
-  input:{
-      flex : 1,
-      paddingHorizontal: 10,
-      backgroundColor: "#FFF"
-  },
-  wrapper:{
-      paddingHorizontal: 15
-  },
-  iconWrap:{
-      paddingHorizontal: 7,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "#ffffff"
-  },
-  icon:{
-      width: 20,
-      height: 20
-  },
-  button:{
-      backgroundColor: "#ffffff",
-      paddingVertical: 15,
-      marginVertical: 15,
-      alignItems: "center",
-      justifyContent: "center"
-  },
-  buttonText:{
-      color:"#0d0d0d",
-      fontSize: 18
+    container: {
+        flex: 1,
+        backgroundColor: "#F0F0F0",
+        paddingBottom: 20
+    },
+    background: {
+        backgroundColor: '#A6A6A6'
+    },
+    inputWrap: {
+        flexDirection: "row",
+        marginVertical: 10,
+        height: 40,
+        backgroundColor: "transparent"
+    },
+    input: {
+        flex: 1,
+        paddingHorizontal: 10,
+        backgroundColor: "#FFF"
+    },
+    wrapper: {
+        paddingHorizontal: 15
+    },
+    iconWrap: {
+        paddingHorizontal: 7,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#ffffff"
+    },
+    icon: {
+        width: 20,
+        height: 20
+    },
+    button: {
+        backgroundColor: "#ffffff",
+        paddingVertical: 15,
+        marginVertical: 15,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    buttonText: {
+        color: "#0d0d0d",
+        fontSize: 18
 
-  },
-  signUp: {
-      color:"#FFF",
-      backgroundColor:"transparent",
-      textAlign: "center"
-  }
+    },
+    signUp: {
+        color: "#FFF",
+        backgroundColor: "transparent",
+        textAlign: "center"
+    }
 });
 
 function mapDispatchToProps(dispatch) {

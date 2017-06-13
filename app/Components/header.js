@@ -15,16 +15,18 @@ const Header = props => {
             <TouchableWithoutFeedback onPress={() => props.toggle()}>
                 <Icon
                     name = 'bars'
-                    color = 'black'
+                    color = 'white'
                     size = {25}
+                    style = {styles.headerIcon}
                 />
             </TouchableWithoutFeedback>
              <TouchableWithoutFeedback 
                 onPress={() => props.goToSearch()}>
                 <Icon
                     name = 'search'
-                    color = 'black'
+                    color = 'white'
                     size = {25}
+                    style = {styles.headerIcon}
                 />
             </TouchableWithoutFeedback>
         </View>
@@ -38,7 +40,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal : 15,
-        backgroundColor: "#DEB887"
+        backgroundColor: "#350863"
+    },
+    headerIcon: {
+        paddingTop: 12
     }
 })
 
