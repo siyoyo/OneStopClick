@@ -17,7 +17,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from './Actions'
 import Registration from './registration'
+import FBSDK  from 'react-native-fbsdk'
 
+const{
+    LoginButton,
+    AccessToken
+} = FBSDK
 const dismissKeyboard = require('dismissKeyboard');
 const background = require("../images/background.jpg");
 const lockIcon = require("../images/lock.png");
@@ -151,6 +156,25 @@ class Login extends Component{
                                         <Text style={styles.buttonText}>Login</Text>
                                     </View>
                                 </TouchableOpacity>
+                                <LoginButton
+                                    publishPermissions={["publish_actions"]}
+                                    onLoginFinished={
+                                        (error, result) => {
+                                            if (error){
+                                                alert("login has error : " + result.error)
+                                            }else if (result.isCancelled){
+                                                alert("login is cancelled")
+                                            }else{
+                                                AccessToken.getCurrentAccessToken().then(
+                                                    (data) => {
+                                                        alert(data.accessToken.toString())
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    }
+                                    onLogoutFinished={() => alert('logout')}
+                                />
                                 <TouchableOpacity testID="test-id-buttonSignUp" activeOpacity={.5}
                                     onPress={ this.goToSignUp.bind(this) }>
                                     <View>
