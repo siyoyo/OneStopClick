@@ -35,6 +35,10 @@ const ErrorMessages = require("./Util/ErrorMessages");
 const ErrorAlert = require("./Util/ErrorAlert");
 const Config = require('./config');
 const ProductCategories = require('./ProductCategories');
+const AppStore = require('./Store/AppStore');
+const UserStore = require('./Store/UserStore');
+const ShoppingCart = require('./ShoppingCart');
+const Account = require('./Account');
 
 class Home extends Component {
     constructor(props) {
@@ -45,7 +49,9 @@ class Home extends Component {
             password: '',
             userId: '',
             isOpen: false,
-            homeData: []
+            homeData: [],
+            selectedMenu: 1,
+            selectedCategory: ''
         }
     }
 
@@ -104,6 +110,52 @@ class Home extends Component {
         )
     }
 
+    _renderHomeContent() {
+        if (this.state.selectedMenu == 2) {
+            return (
+                <ShoppingCart />
+            );
+        } else if (this.state.selectedMenu == 3) {
+            return (
+                <Text>get product by category Id {this.state.selectedCategory} here </Text>
+            );
+        } else if (this.state.selectedMenu == 4) {
+            return (
+                <Account />
+            );
+        } else {
+            return (
+                <ProductCategories categories={this.state.homeData} navigator={this.props.navigator} />
+            );
+        }
+    }
+
+    _onPressNavMenu(navId, categoryId = '') {
+        console.log(`navigation id ${navId} and category Id ${categoryId} pressed`)
+        AppStore.dispatch({
+            selectedNavigation: {
+                navigationId: navId,
+                categoryId: categoryId
+            },
+            type: 'UPDATE_SELECTED_NAVIGATION'
+        });
+        this.setState({
+            isOpen: false,
+            selectedMenu: navId,
+            selectedCategory: categoryId
+        })
+    }
+
+    _onPressLogout() {
+        UserStore.dispatch({
+            type: 'LOGOUT'
+        });
+        this.props.navigator.replace({
+            title: 'Login',
+            id: 'Login'
+        })
+    }
+
     goToSearch() {
         this.props.navigator.push({
             title: 'Search',
@@ -122,10 +174,12 @@ class Home extends Component {
     }
 
     render() {
+        var homeContent = this._renderHomeContent();
         return (
 
             <SideMenu
-                menu={<Menu />}
+                menu={<Menu onPressNavMenu={this._onPressNavMenu.bind(this)}
+                    onPressLogout={this._onPressLogout.bind(this)}/>}
                 isOpen={this.state.isOpen}
                 onChange={(isOpen) => this.updateMenu(isOpen)}
             >
@@ -134,7 +188,7 @@ class Home extends Component {
                         toggle={this.toggle.bind(this)}
                         goToSearch={this.goToSearch.bind(this)}
                     />
-                    <ProductCategories categories={this.state.homeData} navigator={this.props.navigator}/>
+                    {homeContent}
                 </View>
             </SideMenu>
         )
