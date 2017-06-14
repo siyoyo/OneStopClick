@@ -36,13 +36,23 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* OneStopClickTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* OneStopClickTests.m */; };
+		3C794951A9774EDCA2529D6E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D285D1192EC417C877F0423 /* libz.tbd */; };
 		571E92B7C7804997B104EF0C /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBD5FCD84F134E65BC70F1D1 /* Entypo.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		5FD4982F04534F5084AB08C7 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F05BAD6C73B485383B99539 /* Ionicons.ttf */; };
 		62A0CD3FFBBF4ED9A2B19E09 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2E7E149B55E4D448ED35AB3 /* Zocial.ttf */; };
 		667914839DFD4B729AD72504 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E85467556C44967B814CEAD /* Octicons.ttf */; };
+		68A0A92008DF4B9D8FF47718 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67935C41BAF94918B8D34C74 /* SafariServices.framework */; };
 		70B9327E7E054F7C93712C78 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07F3289C5D0146E0B8B806D4 /* FontAwesome.ttf */; };
 		7E7FAF22073F477B94A58FDB /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF6A43EF5864016BCAE398D /* libRCTFBSDK.a */; };
+		8048A7941EF0F7F000DCF2E0 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A78D1EF0F7F000DCF2E0 /* GoogleAppUtilities.framework */; };
+		8048A7951EF0F7F000DCF2E0 /* GoogleAuthUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A78E1EF0F7F000DCF2E0 /* GoogleAuthUtilities.framework */; };
+		8048A7961EF0F7F000DCF2E0 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A78F1EF0F7F000DCF2E0 /* GoogleNetworkingUtilities.framework */; };
+		8048A7971EF0F7F000DCF2E0 /* GoogleSignIn.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A7901EF0F7F000DCF2E0 /* GoogleSignIn.bundle */; };
+		8048A7981EF0F7F000DCF2E0 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A7911EF0F7F000DCF2E0 /* GoogleSignIn.framework */; };
+		8048A7991EF0F7F000DCF2E0 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A7921EF0F7F000DCF2E0 /* GoogleSymbolUtilities.framework */; };
+		8048A79A1EF0F7F000DCF2E0 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A7931EF0F7F000DCF2E0 /* GoogleUtilities.framework */; };
+		8048A79C1EF0F9E600DCF2E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8048A79B1EF0F9E600DCF2E0 /* GoogleService-Info.plist */; };
 		805389841EEFA62000C55E32 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8053897F1EEFA62000C55E32 /* Bolts.framework */; };
 		805389851EEFA62000C55E32 /* fbsdk.zip in Frameworks */ = {isa = PBXBuildFile; fileRef = 805389801EEFA62000C55E32 /* fbsdk.zip */; };
 		805389861EEFA62000C55E32 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805389811EEFA62000C55E32 /* FBSDKCoreKit.framework */; };
@@ -50,9 +60,12 @@
 		805389881EEFA62000C55E32 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805389831EEFA62000C55E32 /* FBSDKShareKit.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		908E6A52632B4D97BFA098FC /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F38D43013D45D99672378E /* MaterialIcons.ttf */; };
+		912850F2BAD44AAAA611DF48 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57BD32CDBDE24C9CB3790772 /* SystemConfiguration.framework */; };
+		A948CFFBBBD4411EBADC559B /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFF2EAA0E6A4760859DEA2E /* libRNGoogleSignin.a */; };
 		B6CBE6AAC8414CAB9036AD09 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 591B4E3E40D5467DAD6F20D0 /* Foundation.ttf */; };
 		B92938ECBFB541FE8CD17C92 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E937D2C906043D68230DFA9 /* MaterialCommunityIcons.ttf */; };
 		BC589FE791C84E8697ACF19B /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3EAC3817AC4FF5A7D40D07 /* libRNVectorIcons.a */; };
+		D82356B812994A42B6A5F770 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7215113ECEA461EA19CABAB /* AddressBook.framework */; };
 		F855CD6853F84A8B9360060E /* libRCTBEEPickerManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09229733D29A400E9630B91E /* libRCTBEEPickerManager.a */; };
 /* End PBXBuildFile section */
 
@@ -239,6 +252,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
 		};
+		8048A7841EF0E0EF00DCF2E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 103BB2D7A01C4E5594C9FCBF /* RNGoogleSignin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
+			remoteInfo = RNGoogleSignin;
+		};
 		805389331EEF704800C55E32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4E1D723B841441594D79016 /* RCTFBSDK.xcodeproj */;
@@ -281,6 +301,7 @@
 		00E356F21AD99517003FC87E /* OneStopClickTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneStopClickTests.m; sourceTree = "<group>"; };
 		07F3289C5D0146E0B8B806D4 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		09229733D29A400E9630B91E /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBEEPickerManager.a; sourceTree = "<group>"; };
+		103BB2D7A01C4E5594C9FCBF /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		1237DEAC84254F43900F4B47 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -297,21 +318,34 @@
 		2D02E47B1E0B4A5D006451C7 /* OneStopClick-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OneStopClick-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* OneStopClick-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OneStopClick-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3EAC3817AC4FF5A7D40D07 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		57BD32CDBDE24C9CB3790772 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		591B4E3E40D5467DAD6F20D0 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		67935C41BAF94918B8D34C74 /* SafariServices.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7F05BAD6C73B485383B99539 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		8048A78D1EF0F7F000DCF2E0 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleAppUtilities.framework; path = Frameworks/GoogleAppUtilities.framework; sourceTree = "<group>"; };
+		8048A78E1EF0F7F000DCF2E0 /* GoogleAuthUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleAuthUtilities.framework; path = Frameworks/GoogleAuthUtilities.framework; sourceTree = "<group>"; };
+		8048A78F1EF0F7F000DCF2E0 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleNetworkingUtilities.framework; path = Frameworks/GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
+		8048A7901EF0F7F000DCF2E0 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleSignIn.bundle; path = Frameworks/GoogleSignIn.bundle; sourceTree = "<group>"; };
+		8048A7911EF0F7F000DCF2E0 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSignIn.framework; path = Frameworks/GoogleSignIn.framework; sourceTree = "<group>"; };
+		8048A7921EF0F7F000DCF2E0 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		8048A7931EF0F7F000DCF2E0 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = Frameworks/GoogleUtilities.framework; sourceTree = "<group>"; };
+		8048A79B1EF0F9E600DCF2E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8053897F1EEFA62000C55E32 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Frameworks/Bolts.framework; sourceTree = "<group>"; };
 		805389801EEFA62000C55E32 /* fbsdk.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = fbsdk.zip; path = Frameworks/fbsdk.zip; sourceTree = "<group>"; };
 		805389811EEFA62000C55E32 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Frameworks/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		805389821EEFA62000C55E32 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Frameworks/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		805389831EEFA62000C55E32 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Frameworks/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		9D285D1192EC417C877F0423 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A2E7E149B55E4D448ED35AB3 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		BAF6A43EF5864016BCAE398D /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		C1F38D43013D45D99672378E /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		CBFF2EAA0E6A4760859DEA2E /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = "<group>"; };
 		CED86F751F414E9E8453FD01 /* RCTBEEPickerManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBEEPickerManager.xcodeproj; path = "../node_modules/react-native-picker/ios/RCTBEEPickerManager.xcodeproj"; sourceTree = "<group>"; };
 		D4E1D723B841441594D79016 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
+		D7215113ECEA461EA19CABAB /* AddressBook.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E3172739B2934EBEA21AD255 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		E6C7338A42CC4A7E8B4E774B /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		FBD5FCD84F134E65BC70F1D1 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -330,6 +364,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8048A7941EF0F7F000DCF2E0 /* GoogleAppUtilities.framework in Frameworks */,
+				8048A7951EF0F7F000DCF2E0 /* GoogleAuthUtilities.framework in Frameworks */,
+				8048A7961EF0F7F000DCF2E0 /* GoogleNetworkingUtilities.framework in Frameworks */,
+				8048A7971EF0F7F000DCF2E0 /* GoogleSignIn.bundle in Frameworks */,
+				8048A7981EF0F7F000DCF2E0 /* GoogleSignIn.framework in Frameworks */,
+				8048A7991EF0F7F000DCF2E0 /* GoogleSymbolUtilities.framework in Frameworks */,
+				8048A79A1EF0F7F000DCF2E0 /* GoogleUtilities.framework in Frameworks */,
 				805389841EEFA62000C55E32 /* Bolts.framework in Frameworks */,
 				805389851EEFA62000C55E32 /* fbsdk.zip in Frameworks */,
 				805389861EEFA62000C55E32 /* FBSDKCoreKit.framework in Frameworks */,
@@ -349,6 +390,11 @@
 				BC589FE791C84E8697ACF19B /* libRNVectorIcons.a in Frameworks */,
 				F855CD6853F84A8B9360060E /* libRCTBEEPickerManager.a in Frameworks */,
 				7E7FAF22073F477B94A58FDB /* libRCTFBSDK.a in Frameworks */,
+				A948CFFBBBD4411EBADC559B /* libRNGoogleSignin.a in Frameworks */,
+				3C794951A9774EDCA2529D6E /* libz.tbd in Frameworks */,
+				68A0A92008DF4B9D8FF47718 /* SafariServices.framework in Frameworks */,
+				912850F2BAD44AAAA611DF48 /* SystemConfiguration.framework in Frameworks */,
+				D82356B812994A42B6A5F770 /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +508,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				8048A79B1EF0F9E600DCF2E0 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -518,6 +565,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8048A7661EF0E0EF00DCF2E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8048A7851EF0E0EF00DCF2E0 /* libRNGoogleSignin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8053892C1EEF704800C55E32 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -529,11 +584,22 @@
 		8053894C1EEF879700C55E32 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8048A78D1EF0F7F000DCF2E0 /* GoogleAppUtilities.framework */,
+				8048A78E1EF0F7F000DCF2E0 /* GoogleAuthUtilities.framework */,
+				8048A78F1EF0F7F000DCF2E0 /* GoogleNetworkingUtilities.framework */,
+				8048A7901EF0F7F000DCF2E0 /* GoogleSignIn.bundle */,
+				8048A7911EF0F7F000DCF2E0 /* GoogleSignIn.framework */,
+				8048A7921EF0F7F000DCF2E0 /* GoogleSymbolUtilities.framework */,
+				8048A7931EF0F7F000DCF2E0 /* GoogleUtilities.framework */,
 				8053897F1EEFA62000C55E32 /* Bolts.framework */,
 				805389801EEFA62000C55E32 /* fbsdk.zip */,
 				805389811EEFA62000C55E32 /* FBSDKCoreKit.framework */,
 				805389821EEFA62000C55E32 /* FBSDKLoginKit.framework */,
 				805389831EEFA62000C55E32 /* FBSDKShareKit.framework */,
+				9D285D1192EC417C877F0423 /* libz.tbd */,
+				67935C41BAF94918B8D34C74 /* SafariServices.framework */,
+				57BD32CDBDE24C9CB3790772 /* SystemConfiguration.framework */,
+				D7215113ECEA461EA19CABAB /* AddressBook.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -571,6 +637,7 @@
 				E6C7338A42CC4A7E8B4E774B /* RNVectorIcons.xcodeproj */,
 				CED86F751F414E9E8453FD01 /* RCTBEEPickerManager.xcodeproj */,
 				D4E1D723B841441594D79016 /* RCTFBSDK.xcodeproj */,
+				103BB2D7A01C4E5594C9FCBF /* RNGoogleSignin.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -773,6 +840,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 8048A7661EF0E0EF00DCF2E0 /* Products */;
+					ProjectRef = 103BB2D7A01C4E5594C9FCBF /* RNGoogleSignin.xcodeproj */;
+				},
+				{
 					ProductGroup = 80625F091EDD1F9000E5C25B /* Products */;
 					ProjectRef = E6C7338A42CC4A7E8B4E774B /* RNVectorIcons.xcodeproj */;
 				},
@@ -956,6 +1027,13 @@
 			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		8048A7851EF0E0EF00DCF2E0 /* libRNGoogleSignin.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGoogleSignin.a;
+			remoteRef = 8048A7841EF0E0EF00DCF2E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		805389341EEF704800C55E32 /* libRCTFBSDK.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -998,6 +1076,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8048A79C1EF0F9E600DCF2E0 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				571E92B7C7804997B104EF0C /* Entypo.ttf in Resources */,
@@ -1138,12 +1217,14 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin/**",
 				);
 				INFOPLIST_FILE = OneStopClickTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1168,12 +1249,14 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin/**",
 				);
 				INFOPLIST_FILE = OneStopClickTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1203,6 +1286,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin/**",
 				);
 				INFOPLIST_FILE = OneStopClick/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1231,6 +1315,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin/**",
 				);
 				INFOPLIST_FILE = OneStopClick/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1262,11 +1347,13 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin/**",
 				);
 				INFOPLIST_FILE = "OneStopClick-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1301,11 +1388,13 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin/**",
 				);
 				INFOPLIST_FILE = "OneStopClick-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1341,6 +1430,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.OneStopClick-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1366,6 +1456,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

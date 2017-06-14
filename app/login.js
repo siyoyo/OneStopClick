@@ -18,6 +18,7 @@ import { bindActionCreators } from 'redux'
 import { ActionCreators } from './Actions'
 import Registration from './registration'
 import FBSDK  from 'react-native-fbsdk'
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
 
 const{
     LoginButton,
@@ -46,8 +47,13 @@ class Login extends Component{
             email: '',
             password: '',
             userId: '',
-            accessToken: ''
+            accessToken: '',
+            user: ''
         }
+    }
+
+    componentDidMount(){
+        this._setupGoogleSignin()
     }
 
     goToSignUp(){
@@ -108,6 +114,30 @@ class Login extends Component{
                 ErrorAlert.show(error);
             }.bind(this)
             );
+    }
+
+    async _setupGoogleSignin(){
+        try {
+            await GoogleSignin.hasPlayServices({autoResolve: true})
+            await GoogleSignin.configure({
+                iosClientId:'com.googleusercontent.apps.64926634916-vst43n1gvuulj73nld1ggfqi7f5al49s',
+                offlineAccess: false
+            })
+
+            const user = await GoogleSignin.currentUserAsync()
+            this.setState({user})
+        } catch (error) {
+            console.log('Google signIn error', err.code, err.message)
+        }
+    }
+
+    signInGoogle(){
+        GoogleSignin.hasPlayServices({ autoResolve: true}).then(() => {
+            this.setState({user})
+        })
+        .catch((err) => {
+            console.log("Play services error", err.code, err.message)
+        })
     }
 
     render(){
@@ -179,6 +209,12 @@ class Login extends Component{
                                     }
                                     onLogoutFinished={() => alert('logout')}
                                 />
+                                <GoogleSigninButton 
+                                    style={{width: 212, height: 48}}
+                                    size={GoogleSigninButton.Size.Standard}
+                                    color={GoogleSigninButton.Color.Auto}
+                                    onPress={this.signInGoogle.bind(this)}
+                                />
                                 <TouchableOpacity testID="test-id-buttonSignUp" activeOpacity={.5}
                                     onPress={ this.goToSignUp.bind(this) }>
                                     <View>
@@ -208,7 +244,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   background: {
-      backgroundColor: '#A6A6A6'
+      backgroundColor: '#350863'
   },
   inputWrap:{
       flexDirection: "row",

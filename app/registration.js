@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   background: {
-      backgroundColor: '#A6A6A6'
+      backgroundColor: '#350863'
   },
   inputWrap:{
       flexDirection: "row",
