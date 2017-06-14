@@ -14,7 +14,8 @@ import {
     Alert,
     FlatList,
     NetInfo,
-    ListView
+    ListView,
+    ScrollView
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -39,6 +40,7 @@ const AppStore = require('./Store/AppStore');
 const UserStore = require('./Store/UserStore');
 const ShoppingCart = require('./ShoppingCart');
 const Account = require('./Account');
+const ProductCategory = require("./ProductCategory");
 
 class Home extends Component {
     constructor(props) {
@@ -51,7 +53,7 @@ class Home extends Component {
             isOpen: false,
             homeData: [],
             selectedMenu: 1,
-            selectedCategory: ''
+            selectedCategoryData: {}
         }
     }
 
@@ -117,7 +119,14 @@ class Home extends Component {
             );
         } else if (this.state.selectedMenu == 3) {
             return (
-                <Text>get product by category Id {this.state.selectedCategory} here </Text>
+                <ProductCategory
+                    category={this.state.selectedCategoryData}
+                    horizontal={false}
+                    navigator={this.props.navigator}
+                    outerContainerStyle={styles.verticalOuterContainer}
+                    innerContainerStyle={styles.verticalInnerContainer}
+                    productBoxContainerStyle={styles.productBoxContainer}
+                />
             );
         } else if (this.state.selectedMenu == 4) {
             return (
@@ -125,13 +134,20 @@ class Home extends Component {
             );
         } else {
             return (
-                <ProductCategories categories={this.state.homeData} navigator={this.props.navigator} />
+                <ProductCategories
+                    categories={this.state.homeData}
+                    navigator={this.props.navigator}
+                    outerContainerStyle={styles.horizontalOuterContainer}
+                    innerContainerStyle={styles.horizontalInnerContainer}
+                />
             );
         }
     }
 
     _onPressNavMenu(navId, categoryId = '') {
         console.log(`navigation id ${navId} and category Id ${categoryId} pressed`)
+        var selectedCategoryData = this.state.homeData.filter((cat) => cat.id == categoryId)[0];
+        console.log('categoryData: ' + JSON.stringify(selectedCategoryData));
         AppStore.dispatch({
             selectedNavigation: {
                 navigationId: navId,
@@ -142,7 +158,7 @@ class Home extends Component {
         this.setState({
             isOpen: false,
             selectedMenu: navId,
-            selectedCategory: categoryId
+            selectedCategoryData: selectedCategoryData
         })
     }
 
@@ -179,7 +195,7 @@ class Home extends Component {
 
             <SideMenu
                 menu={<Menu onPressNavMenu={this._onPressNavMenu.bind(this)}
-                    onPressLogout={this._onPressLogout.bind(this)}/>}
+                    onPressLogout={this._onPressLogout.bind(this)} />}
                 isOpen={this.state.isOpen}
                 onChange={(isOpen) => this.updateMenu(isOpen)}
             >
@@ -188,7 +204,9 @@ class Home extends Component {
                         toggle={this.toggle.bind(this)}
                         goToSearch={this.goToSearch.bind(this)}
                     />
-                    {homeContent}
+                    <ScrollView>
+                        {homeContent}
+                    </ScrollView>
                 </View>
             </SideMenu>
         )
@@ -198,8 +216,7 @@ class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F0F0F0",
-        paddingBottom: 20
+        backgroundColor: "#F0F0F0"
     },
     background: {
         backgroundColor: '#A6A6A6'
@@ -244,6 +261,35 @@ const styles = StyleSheet.create({
         color: "#FFF",
         backgroundColor: "transparent",
         textAlign: "center"
+    },
+    horizontalOuterContainer: {
+        marginLeft: 10,
+        marginTop: 10,
+        backgroundColor: "#FFFFFF",
+        shadowOffset: { width: 5, height: 2, },
+        shadowColor: '#888888',
+        shadowOpacity: 0.5,
+    },
+    horizontalInnerContainer: {
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 20
+    },
+    verticalOuterContainer: {
+        marginLeft: 10,
+        marginTop: 10,
+        marginRight: 10,
+        backgroundColor: "#FFFFFF",
+        shadowOffset: { width: 2, height: 2, },
+        shadowColor: '#888888',
+        shadowOpacity: 0.5,
+    },
+    verticalInnerContainer: {
+        margin: 10
+    },
+    productBoxContainer: {
+        margin: 10
     }
 });
 

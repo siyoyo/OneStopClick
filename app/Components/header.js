@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal : 15,
-        backgroundColor: "#350863"
+        backgroundColor: "#6119BD"
     },
     headerIcon: {
         paddingTop: 12

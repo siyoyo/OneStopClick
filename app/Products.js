@@ -32,7 +32,7 @@ class Products extends Component {
 
     render() {
         return (
-            <View style={this.props.containerStyle}>
+            <View style={this.props.productsContainerStyle}>
                 <FlatList
                     horizontal={this.props.horizontal}
                     ItemSeparatorComponent={() => this._renderSeparator()}

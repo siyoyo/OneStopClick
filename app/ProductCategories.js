@@ -33,7 +33,9 @@ class ProductCategories extends Component {
                         category={item}
                         horizontal={true}
                         navigator={this.props.navigator}
-                    />}
+                        outerContainerStyle={this.props.outerContainerStyle}
+                        innerContainerStyle={this.props.innerContainerStyle} />
+                    }
                 />
             </View>
         )

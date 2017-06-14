@@ -17,12 +17,16 @@ class ProductCategory extends Component {
 
     render() {
         return (
-            <View style={{ marginLeft: 10, marginTop: 10, backgroundColor: "#FFFFFF"}} >
-                <View style={{ margin: 10 }}>
+            <View style={this.props.outerContainerStyle} >
+                <View style={this.props.innerContainerStyle}>
                     <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, paddingBottom: 10 }}>{this.props.category.name}</Text>
-                    <Products horizontal={this.props.horizontal} products={this.props.category.products} navigator={this.props.navigator} />
+                    <Products 
+                    horizontal={this.props.horizontal} 
+                    products={this.props.category.products} 
+                    navigator={this.props.navigator}
+                    productsContainerStyle={this.props.productsContainerStyle}
+                    productBoxContainerStyle={this.props.productBoxContainerStyle} />
                 </View>
-                <View style={{ height: 10 }} />
             </View >
         )
     }

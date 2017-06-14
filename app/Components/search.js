@@ -188,7 +188,7 @@ class Search extends Component {
             return <Products products={this.state.searchData}
                 horizontal={false}
                 navigator={this.props.navigator}
-                containerStyle={styles.productsContainer}
+                productsContainerStyle={styles.productsContainer}
                 productBoxContainerStyle={styles.productBoxContainerStyle} />
         }
         else

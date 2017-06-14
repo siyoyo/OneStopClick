@@ -87,7 +87,7 @@ module.exports = class Menu extends Component {
           <Image
             style={styles.avatar}
             source={{ uri, }} />
-          <Text style={[styles.text, styles.avatarName]} numberOfLines={2} >{this.state.username}</Text>
+          <Text style={[styles.text, styles.avatarName]} numberOfLines={1} >{this.state.username}</Text>
         </View>
         <Separator separatorStyle={styles.separatorStyle} />
         <TouchableOpacity onPress={() => this.props.onPressNavMenu(1)}>
@@ -171,24 +171,21 @@ const styles = StyleSheet.create({
     flex: 1,
     width: window.width,
     height: window.height,
-    backgroundColor: '#350863'
+    backgroundColor: '#6119BD'
   },
   avatarContainer: {
     marginBottom: 20,
     marginTop: 80,
-    marginLeft: 15,
     marginRight: 15,
-    flexDirection: 'row',
-    alignItems: 'center'
+    marginLeft: 15,
+    flexDirection: 'column',
   },
   avatar: {
     width: 48,
     height: 48,
-    borderRadius: 24
+    borderRadius: 24,
   },
   avatarName: {
-    marginLeft: 15,
-
   },
   optionContainer: {
     height: 40,
@@ -217,6 +214,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   separatorStyle: {
-    backgroundColor: '#6119BD'
+    backgroundColor: '#AB84D8'
   }
 });
