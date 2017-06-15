@@ -60,7 +60,7 @@ class Home extends Component {
     componentWillMount() {
         NetInfo.addEventListener(
             'change',
-            this._handleConnectionInfoChange
+            this._handleFirstConnectivityChange
         );
 
         this._getHomeProducts();

@@ -42,7 +42,7 @@ class ProductBox extends Component {
             return (
                 <View style={[{ flexDirection: 'row', justifyContent: 'flex-start' }, this.props.productBoxContainerStyle]}>
                     <ImageLoad
-                        style={{ width: 72, height: 72 }}
+                        style={{ width: 72, height: 72,  borderRadius: 10 }}
                         isShowActivity={false}
                         source={{ uri: this.props.product.images[0].image_url }}
                         placeholderSource={background}

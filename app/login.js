@@ -11,7 +11,8 @@ import{
     Navigator,
     AsyncStorage,
     ActivityIndicator,
-    Alert
+    Alert,
+    NetInfo
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -44,16 +45,113 @@ class Login extends Component{
         super(props)
         this.state ={
             loading: false,
-            email: '',
-            password: '',
+            email: 'ryan.adhitya@mitrais.com',
+            password: 'mitrais',
             userId: '',
             accessToken: '',
             user: ''
         }
     }
 
+    componentWillMount(){
+        this._componentWillUnmountStream = new Rx.Subject();
+        this._loginBtnPressStream = new Rx.Subject();
+
+        this._loginBtnPressStream
+            .takeUntil(this._componentWillUnmountStream)
+            .filter(() => {
+                console.log("login button pressed");
+                return !this.state.loading; // only continue if not searching yet
+            })
+            .flatMap(() => {
+                console.log("checking connection for login");
+                return this._checkConnection();
+            })
+            .filter(isConnected => isConnected)
+            .doOnNext(() => {
+                this.setState({ loading: true });
+            })
+            .flatMap(() => {
+                console.log("trying to login");
+                return Rx.Observable.fromPromise(LoginService.login({
+                    username: this.state.email,
+                    password: this.state.password
+                }))
+                .timeout(Config.timeoutThreshold, new Error(ErrorMessages.serverError));
+            })
+            .map((response) => {
+                return {
+                    tokenType: response.token_type,
+                    expiresIn: response.expires_in,
+                    accessToken: response.access_token,
+                    refreshToken: response.refreshToken
+                }
+            })
+            .subscribe(
+            (value) => this._onLoginSuccess(value),
+            (error) => this._onLoginFail(error),
+            () => this._onLoginComplete());
+    }
+
     componentDidMount(){
+        NetInfo.isConnected.addEventListener(
+            'change',
+            this._handleFirstConnectivityChange
+        );
+
         this._setupGoogleSignin()
+    }
+
+    componentWillUnmount() {
+        this._componentWillUnmountStream.onNext(null);
+        this._componentWillUnmountStream.onCompleted();
+    }
+
+    _handleFirstConnectivityChange(isConnected) {
+        console.log('Then, is ' + (isConnected ? 'online' : 'offline'));
+        NetInfo.isConnected.removeEventListener(
+            'change',
+            this._handleFirstConnectivityChange
+        );
+    }
+
+    _checkConnection() {
+        return Rx.Observable.create(observer => {
+            NetInfo.isConnected.fetch().then(isConnected => {
+                if (isConnected) {
+                    observer.next(isConnected);
+                    observer.onCompleted();
+                }
+                else {
+                    observer.error("no internet connection")
+                }
+            });
+        });
+    }
+
+    _onLoginSuccess(value) {
+        UserStore.dispatch({
+            accessToken: value.accessToken,
+            type: 'UPDATE_ACCESS_TOKEN'
+        });
+
+        UserStore.dispatch({
+            username: this.state.email,
+            type: 'LOGIN'
+        });
+
+        this.props.navigator.replace({
+            title: 'Home',
+            id: 'Home'
+        })
+    }
+
+    _onLoginFail(error) {
+        ErrorAlert.show(error);
+    }
+
+    _onLoginComplete() {
+        console.log('_loginBtnPressStream complete')
     }
 
     goToSignUp(){
@@ -140,7 +238,25 @@ class Login extends Component{
         })
     }
 
+    _renderLoginBtn(){
+        if(this.state.loading){
+            return (
+                <View style={[styles.button, styles.loadingButton]}>
+                    <Text style={styles.buttonText}>Logging In</Text>
+                    <ActivityIndicator style={styles.ActivityIndicator} />
+                </View> 
+            );
+        } else {
+            return (
+                <View style={styles.button}>
+                    <Text style={styles.buttonText}>Login</Text>
+                </View> 
+            );
+        }
+    }
+
     render(){
+        var loginButton = this._renderLoginBtn();
         return(
             <TouchableWithoutFeedback
                 onPress={() => dismissKeyboard()}
@@ -185,10 +301,8 @@ class Login extends Component{
                                 </View>
                                 <TouchableOpacity activeOpacity={.5}
                                     testID="test-id-buttonSignIn"
-                                    onPress= {this.signIn.bind(this)}>
-                                    <View style={styles.button}>
-                                        <Text style={styles.buttonText}>Login</Text>
-                                    </View>
+                                    onPress= {() => this._loginBtnPressStream.onNext(null)}>
+                                    {loginButton}
                                 </TouchableOpacity>
                                 <LoginButton
                                     publishPermissions={["publish_actions"]}
@@ -276,6 +390,13 @@ const styles = StyleSheet.create({
       marginVertical: 15,
       alignItems: "center",
       justifyContent: "center"
+  },
+  loadingButton: {
+      opacity: 0.5,
+      flexDirection: 'row'
+  },
+  ActivityIndicator: {
+    marginLeft: 20
   },
   buttonText:{
       color:"#0d0d0d",
