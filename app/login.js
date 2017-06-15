@@ -218,7 +218,7 @@ class Login extends Component{
         try {
             await GoogleSignin.hasPlayServices({autoResolve: true})
             await GoogleSignin.configure({
-                iosClientId:'com.googleusercontent.apps.64926634916-vst43n1gvuulj73nld1ggfqi7f5al49s',
+                iosClientId:'64926634916-vst43n1gvuulj73nld1ggfqi7f5al49s.apps.googleusercontent.com',
                 offlineAccess: false
             })
 

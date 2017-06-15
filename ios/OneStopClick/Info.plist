@@ -31,8 +31,6 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.googleusercontent.apps.64926634916-vst43n1gvuulj73nld1ggfqi7f5al49s</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.64926634916-vst43n1gvuulj73nld1ggfqi7f5al49s</string>
@@ -41,8 +39,6 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>org.reactjs.native.example.OneStopClick</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>org.reactjs.native.example.OneStopClick</string>
