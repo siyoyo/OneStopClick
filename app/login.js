@@ -326,12 +326,14 @@ class Login extends Component{
                                         onLogoutFinished={() => alert('logout')}
                                     />
                                 </View>
+                                <View style={styles.facebookLoginContainer}>
                                 <GoogleSigninButton 
-                                    style={{width: 212, height: 48}}
+                                    style={{width: 230, height: 48}}
                                     size={GoogleSigninButton.Size.Standard}
-                                    color={GoogleSigninButton.Color.Auto}
+                                    color={GoogleSigninButton.Color.Dark}
                                     onPress={this.signInGoogle.bind(this)}
                                 />
+                                </View>
                                 <TouchableOpacity testID="test-id-buttonSignUp" activeOpacity={.5}
                                     onPress={ this.goToSignUp.bind(this) }>
                                     <View>
@@ -384,7 +386,7 @@ const styles = StyleSheet.create({
       height: 20
   },
   button:{
-      backgroundColor: "#ffffff",
+      backgroundColor: "#fefeff",
       paddingVertical: 15,
       marginVertical: 15,
       alignItems: "center",
@@ -417,7 +419,7 @@ const styles = StyleSheet.create({
   },
   facebookLoginContainer: {
       alignItems: 'center',
-      marginBottom: 20
+      marginBottom: 10
   }
 });
 
