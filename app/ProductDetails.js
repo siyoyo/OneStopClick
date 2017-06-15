@@ -24,6 +24,7 @@ const ProductService = require('./Api/ProductService')
 const background = require("../images/background.jpg");
 const {width, height} = Dimensions.get('window')
 import StarRating from 'react-native-rating-star'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 class ProductDetails extends Component {
     constructor(props) {
@@ -90,7 +91,16 @@ class ProductDetails extends Component {
         console.log(rating)
     }
 
+    _renderPrice() {
+        if (this.state.product.price == "0.00") {
+            return "FREE";
+        } else {
+            return "IDR" + this.state.product.price;
+        }
+    }
+
     render() {
+        var price = this._renderPrice();
         return (
             <View style={{flex: 1}}>
                 <PlainNavigationBar navigator={this.props.navigator} title={this.state.product.product_name} hasRightImage={false} />
@@ -101,11 +111,23 @@ class ProductDetails extends Component {
                         <View style={styles.detailsText}>
                             <Text style={styles.titleText} numberOfLines={2}>{this.state.product.product_name}</Text>
                             <Text style={styles.descriptionText} numberOfLines={0}>{this.state.product.description}</Text>
-                            <TouchableOpacity style={styles.buttonTouch}>
-                                <View style={styles.buttonContainer}>
-                                    <Text style={styles.buttonText}>{this.state.product.price}</Text>
-                                </View>
-                        </TouchableOpacity>
+                            <View style={styles.priceRowContainer}>
+                                <TouchableOpacity style={styles.buttonTouch}>
+                                    <View style={styles.buttonContainer}>
+                                        <Text style={styles.buttonText}>{price}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.buttonCartTouch}>
+                                    <View style={styles.buttonAddToCartContainer}>
+                                        <Icon
+                                            name='shopping-cart'
+                                            color='white'
+                                            size={15}
+                                            style={styles.iconAddToCart} />
+                                        <Text style={styles.buttonText}>Add To Cart</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.rateView}>
@@ -149,24 +171,45 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         padding: 10
     },
+    buttonCartTouch:{
+        alignItems: 'flex-end',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        paddingTop: 10,
+        paddingLeft: 0,
+        paddingBottom: 10
+    },
     buttonContainer:{
-        width: 80,
-        height: 40,
-        backgroundColor: '#DEB887',
+        width: 100,
+        height: 30,
+        backgroundColor: '#6119BD',
         justifyContent:'center',
         alignItems: 'center'
     },
+    buttonAddToCartContainer: {
+        width: 100,
+        height: 30,
+        flexDirection: 'row',
+        backgroundColor: '#6119BD',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    iconAddToCart: {
+        marginRight: 5
+    },
     buttonText:{
-        color: 'black'
+        color: 'white',
+        fontSize: 12,
     },
     titleText:{
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 16,
+        fontWeight: '600',
         padding: 10,
         flexWrap: 'wrap',
         width : width - 100
     },
     descriptionText:{
+        fontSize: 14,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center',
@@ -177,7 +220,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         flexDirection:'row',
         borderBottomWidth:1,
-        borderColor: '#3a3a3a'
+        borderColor: '#F0F0F0'
     },
     detailsText:{
         marginLeft: 10,
@@ -192,9 +235,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 10
     },
-    rateView : {
+    rateView: {
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    priceRowContainer: {
+        flexDirection: 'row'
     }
 })
 

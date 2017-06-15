@@ -33,11 +33,11 @@ class PlainNavigationBar extends Component {
                 >
                     <Icon
                         name = 'arrow-left'
-                        color = 'black'
+                        color = 'white'
                         size = {25}
                     />
                 </TouchableOpacity>
-                <Text>
+                <Text style={styles.title}>
                     {this.props.title}
                 </Text>
                 {this.props.hasRightImage ?
@@ -65,11 +65,15 @@ var styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: "#DEB887",
+        backgroundColor: "#6119BD",
         paddingTop: 10
     },
     navIconLeft: {
         paddingLeft: 15
+    },
+    title: {
+        fontWeight: '600',
+        color: 'white'
     }
 });
 

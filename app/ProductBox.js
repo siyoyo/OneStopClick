@@ -50,7 +50,7 @@ class ProductBox extends Component {
                     <View style={{ flexDirection: 'column', justifyContent: 'flex-start', marginLeft: 15, width: Dimensions.width - 75 - 72 }}>
                         <Text style={{ flex: 1, fontSize: 14, fontWeight: '600' }} numberOfLines={1}>{this.props.product.product_name}</Text>
                         <Text style={{ flex: 1, fontSize: 12 }} numberOfLines={2}>{this.props.product.description}</Text>
-                        <Text style={{ flex: 2, alignSelf: 'flex-end', color: '#DEB887', fontSize: 12 }}>{this._renderPrice()}</Text>
+                        <Text style={{ flex: 2, alignSelf: 'flex-end', color: '#6119BD', fontSize: 12 }}>{this._renderPrice()}</Text>
                     </View>
                 </View>
             );

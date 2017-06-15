@@ -304,25 +304,28 @@ class Login extends Component{
                                     onPress= {() => this._loginBtnPressStream.onNext(null)}>
                                     {loginButton}
                                 </TouchableOpacity>
-                                <LoginButton
-                                    publishPermissions={["publish_actions"]}
-                                    onLoginFinished={
-                                        (error, result) => {
-                                            if (error){
-                                                alert("login has error : " + result.error)
-                                            }else if (result.isCancelled){
-                                                alert("login is cancelled")
-                                            }else{
-                                                AccessToken.getCurrentAccessToken().then(
-                                                    (data) => {
-                                                        alert(data.accessToken.toString())
-                                                    }
-                                                )
+                                <Text style={styles.orText}>Or</Text>
+                                <View style={styles.facebookLoginContainer}>
+                                    <LoginButton
+                                        publishPermissions={["publish_actions"]}
+                                        onLoginFinished={
+                                            (error, result) => {
+                                                if (error) {
+                                                    alert("login has error : " + result.error)
+                                                } else if (result.isCancelled) {
+                                                    alert("login is cancelled")
+                                                } else {
+                                                    AccessToken.getCurrentAccessToken().then(
+                                                        (data) => {
+                                                            alert(data.accessToken.toString())
+                                                        }
+                                                    )
+                                                }
                                             }
                                         }
-                                    }
-                                    onLogoutFinished={() => alert('logout')}
-                                />
+                                        onLogoutFinished={() => alert('logout')}
+                                    />
+                                </View>
                                 <GoogleSigninButton 
                                     style={{width: 212, height: 48}}
                                     size={GoogleSigninButton.Size.Standard}
@@ -341,10 +344,6 @@ class Login extends Component{
                                         <Text style={styles.signUp}>Forgot Password?</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <ActivityIndicator
-                                    animating = {this.state.loading}
-                                    color='#111'
-                                    size = 'large'></ActivityIndicator>
                             </View>
                         <View style={styles.container} />
                     </View>
@@ -358,7 +357,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   background: {
-      backgroundColor: '#350863'
+      backgroundColor: '#6119BD'
   },
   inputWrap:{
       flexDirection: "row",
@@ -407,6 +406,18 @@ const styles = StyleSheet.create({
       color:"#FFF",
       backgroundColor:"transparent",
       textAlign: "center"
+  },
+  orText: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: 'white',
+      textAlign: 'center',
+      marginTop: 20,
+      marginBottom: 20
+  },
+  facebookLoginContainer: {
+      alignItems: 'center',
+      marginBottom: 20
   }
 });
 

@@ -180,16 +180,35 @@ class Search extends Component {
         })
     }
 
+    _renderResultText(){
+        if(this.state.searchData.length > 0){
+            return (
+                <Text style={styles.resultText}>Found {this.state.searchData.length} result:</Text>
+            );
+        }
+        else {
+            return (
+                <Text style={styles.resultText}>No Result Found</Text>
+            );
+        }
+    }
+
     _renderProduct() {
         if (this.state.isSearching) {
             return <ActivityIndicator style={[styles.centering]} />
         }
         else if (this.state.searchData.length > 0) {
-            return <Products products={this.state.searchData}
-                horizontal={false}
-                navigator={this.props.navigator}
-                productsContainerStyle={styles.productsContainer}
-                productBoxContainerStyle={styles.productBoxContainerStyle} />
+            var resultText = this._renderResultText();
+            return (
+                <View>
+                    {resultText}
+                    <Products products={this.state.searchData}
+                        horizontal={false}
+                        navigator={this.props.navigator}
+                        productsContainerStyle={styles.productsContainer}
+                        productBoxContainerStyle={styles.productBoxContainerStyle} />
+                </View>
+            );
         }
         else
         {
@@ -248,7 +267,7 @@ const styles = StyleSheet.create({
     },
     header: {
         height: 60,
-        backgroundColor: '#DEB887',
+        backgroundColor: '#6119BD',
         borderColor: '#3a3a3a',
         paddingBottom: 5,
         flexDirection: 'row',
@@ -256,8 +275,8 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     headerSearch: {
-        height: 60,
-        backgroundColor: '#DEB887',
+        height: 40,
+        backgroundColor: '#6119BD',
         borderColor: '#3a3a3a',
         paddingBottom: 5,
         flexDirection: 'row',
@@ -339,8 +358,11 @@ const styles = StyleSheet.create({
     },
     productBoxContainerStyle: {
         padding: 15
+    },
+    resultText: {
+        marginTop: 15,
+        marginLeft: 15
     }
-
 })
 
 export default Search
