@@ -21,6 +21,7 @@ import {
 const Rx = require('rx');
 const PlainNavigationBar = require('./Components/PlainNavigationBar');
 const ProductService = require('./Api/ProductService')
+const ProductStore = require('./Store/ProductStore');
 const background = require("../images/background.jpg");
 const {width, height} = Dimensions.get('window')
 import StarRating from 'react-native-rating-star'
@@ -117,7 +118,35 @@ class ProductDetails extends Component {
                                         <Text style={styles.buttonText}>{price}</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.buttonCartTouch}>
+                                <TouchableOpacity style={styles.buttonCartTouch}
+                                    onPress = {() => {
+                                                var shoppingCart = ProductStore.getState().shoppingCartProduct
+                                                if(shoppingCart.length < 1 ){
+                                                    var shoppingProduct = ProductStore.getState().shoppingCartProduct
+                                                    shoppingProduct.push(this.state.product)
+                                                    ProductStore.dispatch({
+                                                        shoppingCartProduct: shoppingProduct,
+                                                        type: 'UPDATE_SHOPPING_CART'
+                                                    })
+                                                }else{
+                                                     var shoppingProduct = []
+                                                     if(shoppingCart.shoppingCartProduct.length > 1){
+                                                         var shoppingCartSlice = []
+                                                        shoppingProduct.push(shoppingCart.shoppingCartProduct, this.state.product)
+                                                         shoppingCart.shoppingCartProduct.forEach((product) => {
+                                                             shoppingCartSlice.push(product)
+                                                         }, this);
+                                                         shoppingProduct = shoppingCartSlice.slice()
+                                                         shoppingProduct.push(this.state.product)
+                                                     }else{
+                                                         shoppingProduct.push(shoppingCart, this.state.product)
+                                                     }
+                                                     ProductStore.dispatch({
+                                                        shoppingCartProduct: shoppingProduct,
+                                                        type: 'UPDATE_SHOPPING_CART'
+                                                    })
+                                                }
+                                     }}>
                                     <View style={styles.buttonAddToCartContainer}>
                                         <Icon
                                             name='shopping-cart'

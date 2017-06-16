@@ -3,7 +3,8 @@ const { createStore } = require('redux');
 const defaultState = {
     selectedProduct: {
         productId: ''
-    }
+    },
+    shoppingCartProduct: []
 }
 
 const reducer = (state = defaultState, action) => {
@@ -14,6 +15,11 @@ const reducer = (state = defaultState, action) => {
                 selectedProduct: {
                     productId: action.productId || state.productId
                 }
+            }
+        case 'UPDATE_SHOPPING_CART':
+            return{
+                ...state,
+                shoppingCartProduct: action
             }
         default:
             return state;
