@@ -49,7 +49,7 @@ class Login extends Component{
             password: 'mitrais',
             userId: '',
             accessToken: '',
-            user: ''
+            user: null
         }
     }
 
@@ -223,6 +223,7 @@ class Login extends Component{
             })
 
             const user = await GoogleSignin.currentUserAsync()
+            console.log(user)
             this.setState({user})
         } catch (error) {
             console.log('Google signIn error', err.code, err.message)
@@ -230,12 +231,24 @@ class Login extends Component{
     }
 
     signInGoogle(){
-        GoogleSignin.hasPlayServices({ autoResolve: true}).then(() => {
-            console.log("test")
+        GoogleSignin.signIn()
+        .then((user) => {
+            console.log(user)
+            this.setState({user: user})
+            alert(user.idToken)
         })
         .catch((err) => {
-            console.log("Play services error", err.code, err.message)
+            console.log('WRONG SIGNIN', err)
         })
+        .done()
+    }
+
+    signOutGoogle(){
+        GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut())
+        .then(() => {
+            this.setState({user : null})
+        })
+        .done()
     }
 
     _renderLoginBtn(){
