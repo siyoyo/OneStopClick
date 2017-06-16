@@ -231,7 +231,7 @@ class Login extends Component{
 
     signInGoogle(){
         GoogleSignin.hasPlayServices({ autoResolve: true}).then(() => {
-            this.setState({user})
+            console.log("test")
         })
         .catch((err) => {
             console.log("Play services error", err.code, err.message)
@@ -326,12 +326,14 @@ class Login extends Component{
                                         onLogoutFinished={() => alert('logout')}
                                     />
                                 </View>
-                                <GoogleSigninButton 
-                                    style={{width: 212, height: 48}}
-                                    size={GoogleSigninButton.Size.Standard}
-                                    color={GoogleSigninButton.Color.Auto}
-                                    onPress={this.signInGoogle.bind(this)}
-                                />
+                                <View style={styles.facebookLoginContainer}>
+                                     <GoogleSigninButton 
+                                        style={{width: 212, height: 48}}
+                                        size={GoogleSigninButton.Size.Standard}
+                                        color={GoogleSigninButton.Color.Auto}
+                                        onPress={this.signInGoogle.bind(this)}
+                                    />
+                                </View>
                                 <TouchableOpacity testID="test-id-buttonSignUp" activeOpacity={.5}
                                     onPress={ this.goToSignUp.bind(this) }>
                                     <View>

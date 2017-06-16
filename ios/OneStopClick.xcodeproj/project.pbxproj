@@ -53,6 +53,7 @@
 		8048A7991EF0F7F000DCF2E0 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A7921EF0F7F000DCF2E0 /* GoogleSymbolUtilities.framework */; };
 		8048A79A1EF0F7F000DCF2E0 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048A7931EF0F7F000DCF2E0 /* GoogleUtilities.framework */; };
 		8048A79C1EF0F9E600DCF2E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8048A79B1EF0F9E600DCF2E0 /* GoogleService-Info.plist */; };
+		804903C21EF3667E00BB7C4B /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8048A7901EF0F7F000DCF2E0 /* GoogleSignIn.bundle */; };
 		805389841EEFA62000C55E32 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8053897F1EEFA62000C55E32 /* Bolts.framework */; };
 		805389851EEFA62000C55E32 /* fbsdk.zip in Frameworks */ = {isa = PBXBuildFile; fileRef = 805389801EEFA62000C55E32 /* fbsdk.zip */; };
 		805389861EEFA62000C55E32 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805389811EEFA62000C55E32 /* FBSDKCoreKit.framework */; };
@@ -1076,6 +1077,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				804903C21EF3667E00BB7C4B /* GoogleSignIn.bundle in Resources */,
 				8048A79C1EF0F9E600DCF2E0 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
