@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
       height: 20
   },
   button:{
-      backgroundColor: "#ffffff",
+      backgroundColor: "#fefeff",
       paddingVertical: 15,
       marginVertical: 15,
       alignItems: "center",
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
   },
   facebookLoginContainer: {
       alignItems: 'center',
-      marginBottom: 20
+      marginBottom: 10
   }
 });
 
