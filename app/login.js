@@ -219,7 +219,8 @@ class Login extends Component{
             await GoogleSignin.hasPlayServices({autoResolve: true})
             await GoogleSignin.configure({
                 iosClientId:'64926634916-vst43n1gvuulj73nld1ggfqi7f5al49s.apps.googleusercontent.com',
-                offlineAccess: false
+                offlineAccess: false,
+                webClientId: '249156269649-llqn8i3p1n4gh4jh0hrgfjpt7d5660f2.apps.googleusercontent.com'
             })
 
             const user = await GoogleSignin.currentUserAsync()
@@ -233,7 +234,7 @@ class Login extends Component{
     signInGoogle(){
         GoogleSignin.signIn()
         .then((user) => {
-            console.log(user)
+            console.log("user response:" + JSON.stringify(user))
             this.setState({user: user})
             alert(user.idToken)
         })
