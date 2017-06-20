@@ -123,7 +123,7 @@ class ProductDetails extends Component {
                                                 var shoppingCart = ProductStore.getState().shoppingCartProduct
                                                 if(shoppingCart.length < 1 ){
                                                     var shoppingProduct = ProductStore.getState().shoppingCartProduct
-                                                    shoppingProduct.push(this.state.product)
+                                                    shoppingProduct.push(this.state.product.id)
                                                     ProductStore.dispatch({
                                                         shoppingCartProduct: shoppingProduct,
                                                         type: 'UPDATE_SHOPPING_CART'
@@ -137,9 +137,9 @@ class ProductDetails extends Component {
                                                              shoppingCartSlice.push(product)
                                                          }, this);
                                                          shoppingProduct = shoppingCartSlice.slice()
-                                                         shoppingProduct.push(this.state.product)
+                                                         shoppingProduct.push(this.state.product.id)
                                                      }else{
-                                                         shoppingProduct.push(shoppingCart, this.state.product)
+                                                         shoppingProduct.push(shoppingCart, this.state.product.id)
                                                      }
                                                      ProductStore.dispatch({
                                                         shoppingCartProduct: shoppingProduct,

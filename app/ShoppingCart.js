@@ -14,16 +14,22 @@ const Rx = require('rx');
 class ShoppingCart extends Component {
     constructor(props) {
         super(props)
+        this.state ={
+            products:ProductStore.getState().shoppingCartProduct
+        }
     }
 
     componentWillMount(){
-        console.log(ProductStore.getState().shoppingCartProduct)
+        var productList = ProductStore.getState().shoppingCartProduct
+        console.log(productList)
+        console.log(this.state.products)
+
     }
 
     render() {
         return (
             <View>
-                <Products products={ProductStore.getState().shoppingCartProduct}
+                <Products products={this.state.products.shoppingCartProduct}
                         horizontal={false}
                         navigator={this.props.navigator}
                         productsContainerStyle={styles.productsContainer}

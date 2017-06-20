@@ -39,21 +39,38 @@ class ProductBox extends Component {
                 </View>
             );
         } else {
-            return (
-                <View style={[{ flexDirection: 'row', justifyContent: 'flex-start' }, this.props.productBoxContainerStyle]}>
-                    <ImageLoad
-                        style={{ width: 72, height: 72,  borderRadius: 10 }}
-                        isShowActivity={false}
-                        source={{ uri: this.props.product.images[0].image_url }}
-                        placeholderSource={background}
-                    />
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start', marginLeft: 15, width: Dimensions.width - 75 - 72 }}>
-                        <Text style={{ flex: 1, fontSize: 14, fontWeight: '600' }} numberOfLines={1}>{this.props.product.product_name}</Text>
-                        <Text style={{ flex: 1, fontSize: 12 }} numberOfLines={2}>{this.props.product.description}</Text>
-                        <Text style={{ flex: 2, alignSelf: 'flex-end', color: '#6119BD', fontSize: 12 }}>{this._renderPrice()}</Text>
+            if (this.props.product.images !== null){
+                return (
+                    <View style={[{ flexDirection: 'row', justifyContent: 'flex-start' }, this.props.productBoxContainerStyle]}>
+                        <ImageLoad
+                            style={{ width: 72, height: 72,  borderRadius: 10 }}
+                            isShowActivity={false}
+                            source={{ uri: this.props.product.images[0].image_url }}
+                            placeholderSource={background}
+                        />
+                        <View style={{ flexDirection: 'column', justifyContent: 'flex-start', marginLeft: 15, width: Dimensions.width - 75 - 72 }}>
+                            <Text style={{ flex: 1, fontSize: 14, fontWeight: '600' }} numberOfLines={1}>{this.props.product.product_name}</Text>
+                            <Text style={{ flex: 1, fontSize: 12 }} numberOfLines={2}>{this.props.product.description}</Text>
+                            <Text style={{ flex: 2, alignSelf: 'flex-end', color: '#6119BD', fontSize: 12 }}>{this._renderPrice()}</Text>
+                        </View>
                     </View>
-                </View>
-            );
+                );
+            }else{
+                <View style={[{ flexDirection: 'row', justifyContent: 'flex-start' }, this.props.productBoxContainerStyle]}>
+                        <ImageLoad
+                            style={{ width: 72, height: 72,  borderRadius: 10 }}
+                            isShowActivity={false}
+                            source={{ uri: this.props.product.shoppingCartProduct[0].imagePreviewUrl }}
+                            placeholderSource={background}
+                        />
+                        <View style={{ flexDirection: 'column', justifyContent: 'flex-start', marginLeft: 15, width: Dimensions.width - 75 - 72 }}>
+                            <Text style={{ flex: 1, fontSize: 14, fontWeight: '600' }} numberOfLines={1}>{this.props.product.product_name}</Text>
+                            <Text style={{ flex: 1, fontSize: 12 }} numberOfLines={2}>{this.props.product.description}</Text>
+                            <Text style={{ flex: 2, alignSelf: 'flex-end', color: '#6119BD', fontSize: 12 }}>{this._renderPrice()}</Text>
+                        </View>
+                    </View>
+            }
+            
         }
     }
 
