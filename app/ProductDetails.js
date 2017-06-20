@@ -119,34 +119,19 @@ class ProductDetails extends Component {
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.buttonCartTouch}
-                                    onPress = {() => {
-                                                var shoppingCart = ProductStore.getState().shoppingCartProduct
-                                                if(shoppingCart.length < 1 ){
-                                                    var shoppingProduct = ProductStore.getState().shoppingCartProduct
-                                                    shoppingProduct.push(this.state.product.id)
-                                                    ProductStore.dispatch({
-                                                        shoppingCartProduct: shoppingProduct,
-                                                        type: 'UPDATE_SHOPPING_CART'
-                                                    })
-                                                }else{
-                                                     var shoppingProduct = []
-                                                     if(shoppingCart.shoppingCartProduct.length > 1){
-                                                         var shoppingCartSlice = []
-                                                        shoppingProduct.push(shoppingCart.shoppingCartProduct, this.state.product)
-                                                         shoppingCart.shoppingCartProduct.forEach((product) => {
-                                                             shoppingCartSlice.push(product)
-                                                         }, this);
-                                                         shoppingProduct = shoppingCartSlice.slice()
-                                                         shoppingProduct.push(this.state.product.id)
-                                                     }else{
-                                                         shoppingProduct.push(shoppingCart, this.state.product.id)
-                                                     }
-                                                     ProductStore.dispatch({
-                                                        shoppingCartProduct: shoppingProduct,
-                                                        type: 'UPDATE_SHOPPING_CART'
-                                                    })
-                                                }
-                                     }}>
+                                    onPress={() => {
+                                        console.log('add to cart pressed');
+                                        var oldCart = [], newCart;
+                                        oldCart = ProductStore.getState().shoppingCartProduct;
+                                        console.log('old shopping cart ' + JSON.stringify(oldCart));
+                                        var newCart = [...oldCart, this.state.product.id];
+                                        console.log('new shopping cart ' + JSON.stringify(newCart));
+                                        ProductStore.dispatch({
+                                            shoppingCartProduct: newCart,
+                                            type: 'UPDATE_SHOPPING_CART'
+                                        })
+                                        console.log('updated shopping cart ' + JSON.stringify(ProductStore.getState().shoppingCartProduct));
+                                    }}>
                                     <View style={styles.buttonAddToCartContainer}>
                                         <Icon
                                             name='shopping-cart'

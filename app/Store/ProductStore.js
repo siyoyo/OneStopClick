@@ -19,7 +19,7 @@ const reducer = (state = defaultState, action) => {
         case 'UPDATE_SHOPPING_CART':
             return{
                 ...state,
-                shoppingCartProduct: action
+                shoppingCartProduct: action.shoppingCartProduct || state.shoppingCartProduct
             }
         default:
             return state;
