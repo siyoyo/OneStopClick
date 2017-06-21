@@ -38,6 +38,7 @@ const Config = require('./config');
 const ProductCategories = require('./ProductCategories');
 const AppStore = require('./Store/AppStore');
 const UserStore = require('./Store/UserStore');
+const ProductStore = require('./Store/ProductStore');
 const ShoppingCart = require('./ShoppingCart');
 const Account = require('./Account');
 const ProductCategory = require("./ProductCategory");
@@ -53,7 +54,8 @@ class Home extends Component {
             isOpen: false,
             homeData: [],
             selectedMenu: 1,
-            selectedCategoryData: {}
+            selectedCategoryData: {},
+            shoppingCartItems: {}
         }
     }
 
@@ -115,7 +117,9 @@ class Home extends Component {
     _renderHomeContent() {
         if (this.state.selectedMenu == 2) {
             return (
-                <ShoppingCart />
+                <ShoppingCart products={this.state.shoppingCartItems}
+                    navigator={this.props.navigator}
+                />
             );
         } else if (this.state.selectedMenu == 3) {
             return (
@@ -158,7 +162,10 @@ class Home extends Component {
         this.setState({
             isOpen: false,
             selectedMenu: navId,
-            selectedCategoryData: selectedCategoryData
+            selectedCategoryData: selectedCategoryData,
+            shoppingCartItems: ([].concat(...(
+                this.state.homeData.map((x) => { return x.products })
+                ))).filter(x => ProductStore.getState().shoppingCartProduct.includes(x.id))
         })
     }
 
