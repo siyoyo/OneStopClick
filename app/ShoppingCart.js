@@ -18,13 +18,16 @@ class ShoppingCart extends Component {
 
     render() {
         return (
-            <View>
-                <Products products={this.props.products}
-                        horizontal={false}
-                        navigator={this.props.navigator}
-                        productsContainerStyle={styles.productsContainer}
-                        productBoxContainerStyle={styles.productBoxContainerStyle} />
-            </View >
+             <View style={this.props.outerContainerStyle} >
+                <View style={this.props.innerContainerStyle}>
+                    <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, paddingBottom: 10 }}>Shopping Cart</Text>
+                    <Products products={this.props.products}
+                            horizontal={false}
+                            navigator={this.props.navigator}
+                            productsContainerStyle={styles.productsContainer}
+                            productBoxContainerStyle={styles.productBoxContainerStyle} />
+                </View >
+            </View>
         )
     }
 }
@@ -58,7 +61,16 @@ const styles = StyleSheet.create({
     },
     productBoxContainer: {
         margin: 10
-    }
+    },
+     productsContainer: {
+        margin: 15,
+        backgroundColor: '#ffffff',
+        borderWidth: 1,
+        borderColor: '#F0F0F0'
+    },
+    productBoxContainerStyle: {
+        padding: 15
+    },
 })
 
 module.exports = ShoppingCart;
