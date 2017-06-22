@@ -7,6 +7,8 @@ import {
     Navigator,
 } from 'react-native'
 
+import Swipeout from 'react-native-swipeout'
+
 const Products= require("./Products");
 const ProductStore = require('./Store/ProductStore');
 const Rx = require('rx');
