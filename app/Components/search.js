@@ -22,6 +22,7 @@ const Rx = require('rx');
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ReactNativePicker from 'react-native-picker'
 const Products = require('../Products');
+const ProductStore = require('../Store/ProductStore');
 const DismissKeyboard = require('dismissKeyboard');
 
 class Search extends Component {
@@ -43,6 +44,10 @@ class Search extends Component {
     }
 
     componentWillMount() {
+        ProductStore.dispatch({
+            isShoppingCart: false,
+            type: 'UPDATE_STATE_PAGE'
+       })
         this._componentWillUnmountStream = new Rx.Subject();
         this._searchBtnPressStream = new Rx.Subject();
 

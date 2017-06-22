@@ -18,6 +18,13 @@ class ShoppingCart extends Component {
         super(props)
     }
 
+    componentWillMount(){
+        ProductStore.dispatch({
+            isShoppingCart: true,
+            type: 'UPDATE_STATE_PAGE'
+       })
+    }
+
     render() {
         return (
              <View style={this.props.outerContainerStyle} >

@@ -66,6 +66,11 @@ class Home extends Component {
         );
 
         this._getHomeProducts();
+
+       ProductStore.dispatch({
+            isShoppingCart: false,
+            type: 'UPDATE_STATE_PAGE'
+       })
     }
 
     _getHomeProducts() {
