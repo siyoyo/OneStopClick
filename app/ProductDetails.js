@@ -26,6 +26,8 @@ const background = require("../images/background.jpg");
 const {width, height} = Dimensions.get('window')
 import StarRating from 'react-native-rating-star'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import ImageLoad from 'react-native-image-placeholder';
+
 
 class ProductDetails extends Component {
     constructor(props) {
@@ -106,9 +108,15 @@ class ProductDetails extends Component {
             <View style={{flex: 1}}>
                 <PlainNavigationBar navigator={this.props.navigator} title={this.state.product.product_name} hasRightImage={false} />
                 <ScrollView style={styles.container}>
-                    <Image source={background} style={styles.thumbnail}/>
+                    {/*<Image source={background} style={styles.thumbnail}/>*/}
+                    <ImageLoad
+                        style={styles.thumbnail}
+                        isShowActivity={false}
+                        source={{ uri: this.state.product.imagePreviewUrl }}
+                        placeholderSource={background}
+                    />
                     <View style={styles.details}>
-                        <Image source={background} style={styles.icon} />
+                        {/*<Image source={background} style={styles.icon} />*/}
                         <View style={styles.detailsText}>
                             <Text style={styles.titleText} numberOfLines={2}>{this.state.product.product_name}</Text>
                             <Text style={styles.descriptionText} numberOfLines={0}>{this.state.product.description}</Text>
@@ -131,6 +139,7 @@ class ProductDetails extends Component {
                                             type: 'UPDATE_SHOPPING_CART'
                                         })
                                         console.log('updated shopping cart ' + JSON.stringify(ProductStore.getState().shoppingCartProduct));
+                                        alert('Added to shopping cart');
                                     }}>
                                     <View style={styles.buttonAddToCartContainer}>
                                         <Icon

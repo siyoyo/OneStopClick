@@ -33,74 +33,56 @@ class Products extends Component {
         }
     }
 
-    _deleteData(item){
-        alert('Deleted')
-        // var shoppingCartData = ProductStore.getState().shoppingCartProduct
-        // console.log(shoppingCartData)
-        // console.log(this.props.product)
-        // var index = shoppingCartData.indexOf(this.props.product.id)
-        // shoppingCartData.splice(index, 1)
-        // console.log(shoppingCartData)
-        // ProductStore.dispatch({
-        //     shoppingCartProduct: shoppingCartData,
-        //     type: 'UPDATE_SHOPPING_CART'
-        // })
-    }
-
-    render() {
-        var swipeBtns = [
+    _renderDeleteButton(item) {
+        return [
             {
                 text: 'Delete',
                 backgroundColor: 'red',
-                underlayColor:'rgba(0,0,0,1)',
-                onPress:(item) => {this._deleteData(item)}
+                underlayColor: 'rgba(0,0,0,1)',
+                onPress: () => { this.props.deleteFunc(item) }
             }
         ]
-        var isShoppingCart = ProductStore.getState().isShoppingCart
-        console.log(isShoppingCart)
-        if (isShoppingCart === true) {
+    }
+
+    render() {
+        if (this.props.canDelete === true) {
             return (
                 <View style={this.props.productsContainerStyle}
                 >
-                        <FlatList
-                            horizontal={this.props.horizontal}
-                            ItemSeparatorComponent={() => this._renderSeparator()}
-                            data={this.props.products}
-                            numColumns={this.props.numColumns}
-                            renderItem={({ item }) => 
-                            <Swipeout right={swipeBtns}
+                    <FlatList
+                        horizontal={this.props.horizontal}
+                        ItemSeparatorComponent={() => this._renderSeparator()}
+                        data={this.props.products}
+                        numColumns={this.props.numColumns}
+                        renderItem={({ item }) =>
+                            <Swipeout right={this._renderDeleteButton(item)}
                                 autoclose='true'
                                 backgroundColor='transparent'
                             >
-                            <TouchableWithoutFeedback
-                                underlayColor='rgba(192,192,192,1.0)'
-                                onPress={() => console.log('test delete')}
-                            >
                                 <ProductBox product={item}
                                     horizontal={this.props.horizontal}
                                     navigator={this.props.navigator}
                                     productBoxContainerStyle={this.props.productBoxContainerStyle} />
-                            </TouchableWithoutFeedback>
                             </Swipeout>}
-                        />
+                    />
                 </View>
             )
-        }else{
+        } else {
             return (
                 <View style={this.props.productsContainerStyle}
                 >
-                        <FlatList
-                            horizontal={this.props.horizontal}
-                            ItemSeparatorComponent={() => this._renderSeparator()}
-                            data={this.props.products}
-                            numColumns={this.props.numColumns}
-                            renderItem={({ item }) => 
-                                <ProductBox product={item}
-                                    horizontal={this.props.horizontal}
-                                    navigator={this.props.navigator}
-                                    productBoxContainerStyle={this.props.productBoxContainerStyle} />
-                            }
-                        />
+                    <FlatList
+                        horizontal={this.props.horizontal}
+                        ItemSeparatorComponent={() => this._renderSeparator()}
+                        data={this.props.products}
+                        numColumns={this.props.numColumns}
+                        renderItem={({ item }) =>
+                            <ProductBox product={item}
+                                horizontal={this.props.horizontal}
+                                navigator={this.props.navigator}
+                                productBoxContainerStyle={this.props.productBoxContainerStyle} />
+                        }
+                    />
                 </View>
             )
         }

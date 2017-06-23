@@ -5,7 +5,6 @@ const defaultState = {
         productId: ''
     },
     shoppingCartProduct: [],
-    isShoppingCart: false
 }
 
 const reducer = (state = defaultState, action) => {
@@ -21,11 +20,6 @@ const reducer = (state = defaultState, action) => {
             return{
                 ...state,
                 shoppingCartProduct: action.shoppingCartProduct || state.shoppingCartProduct
-            }
-        case 'UPDATE_STATE_PAGE':
-            return{
-                ...state,
-                isShoppingCart: action.isShoppingCart || state.isShoppingCart
             }
         default:
             return state;

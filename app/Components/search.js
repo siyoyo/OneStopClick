@@ -44,10 +44,6 @@ class Search extends Component {
     }
 
     componentWillMount() {
-        ProductStore.dispatch({
-            isShoppingCart: false,
-            type: 'UPDATE_STATE_PAGE'
-       })
         this._componentWillUnmountStream = new Rx.Subject();
         this._searchBtnPressStream = new Rx.Subject();
 
@@ -211,7 +207,8 @@ class Search extends Component {
                         horizontal={false}
                         navigator={this.props.navigator}
                         productsContainerStyle={styles.productsContainer}
-                        productBoxContainerStyle={styles.productBoxContainerStyle} />
+                        productBoxContainerStyle={styles.productBoxContainerStyle}
+                        canDelete={false} />
                 </View>
             );
         }

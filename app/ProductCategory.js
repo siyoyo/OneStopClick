@@ -25,7 +25,8 @@ class ProductCategory extends Component {
                     products={this.props.category.products} 
                     navigator={this.props.navigator}
                     productsContainerStyle={this.props.productsContainerStyle}
-                    productBoxContainerStyle={this.props.productBoxContainerStyle} />
+                    productBoxContainerStyle={this.props.productBoxContainerStyle}
+                    canDelete={false} />
                 </View>
             </View >
         )

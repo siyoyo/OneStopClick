@@ -66,11 +66,6 @@ class Home extends Component {
         );
 
         this._getHomeProducts();
-
-       ProductStore.dispatch({
-            isShoppingCart: false,
-            type: 'UPDATE_STATE_PAGE'
-       })
     }
 
     _getHomeProducts() {
@@ -124,6 +119,22 @@ class Home extends Component {
             return (
                 <ShoppingCart products={this.state.shoppingCartItems}
                     navigator={this.props.navigator}
+                    deleteFunc={(product) => {
+                        console.log('remove from cart pressed with id ' + product.id);
+                        var oldCart = [], newCart;
+                        oldCart = ProductStore.getState().shoppingCartProduct;
+                        console.log('old shopping cart ' + JSON.stringify(oldCart));
+                        newCart = oldCart.filter((x) => x !=  product.id)
+                        console.log('new shopping cart ' + JSON.stringify(newCart));
+                        ProductStore.dispatch({
+                            shoppingCartProduct: newCart,
+                            type: 'UPDATE_SHOPPING_CART'
+                        })
+                        console.log('updated shopping cart ' + JSON.stringify(ProductStore.getState().shoppingCartProduct));
+                        this.setState({
+                            shoppingCartItems: this._updateShoppingCart()
+                        })
+                    }}
                 />
             );
         } else if (this.state.selectedMenu == 3) {
@@ -153,6 +164,12 @@ class Home extends Component {
         }
     }
 
+    _updateShoppingCart() {
+        return ([].concat(...(
+                this.state.homeData.map((x) => { return x.products })
+                ))).filter(x => ProductStore.getState().shoppingCartProduct.includes(x.id))
+    }
+
     _onPressNavMenu(navId, categoryId = '') {
         console.log(`navigation id ${navId} and category Id ${categoryId} pressed`)
         var selectedCategoryData = this.state.homeData.filter((cat) => cat.id == categoryId)[0];
@@ -168,9 +185,7 @@ class Home extends Component {
             isOpen: false,
             selectedMenu: navId,
             selectedCategoryData: selectedCategoryData,
-            shoppingCartItems: ([].concat(...(
-                this.state.homeData.map((x) => { return x.products })
-                ))).filter(x => ProductStore.getState().shoppingCartProduct.includes(x.id))
+            shoppingCartItems: this._updateShoppingCart()
         })
     }
 

@@ -18,23 +18,18 @@ class ShoppingCart extends Component {
         super(props)
     }
 
-    componentWillMount(){
-        ProductStore.dispatch({
-            isShoppingCart: true,
-            type: 'UPDATE_STATE_PAGE'
-       })
-    }
-
     render() {
         return (
              <View style={this.props.outerContainerStyle} >
                 <View style={this.props.innerContainerStyle}>
-                    <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, paddingBottom: 10 }}>Shopping Cart</Text>
+                    <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, marginTop: 15, marginLeft: 15 }}>Shopping Cart</Text>
                     <Products products={this.props.products}
                             horizontal={false}
                             navigator={this.props.navigator}
                             productsContainerStyle={styles.productsContainer}
-                            productBoxContainerStyle={styles.productBoxContainerStyle} />
+                            productBoxContainerStyle={styles.productBoxContainerStyle} 
+                            canDelete={true}
+                            deleteFunc={(product) => this.props.deleteFunc(product)}/>
                 </View >
             </View>
         )
