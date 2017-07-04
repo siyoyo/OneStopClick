@@ -51,39 +51,6 @@ class ShoppingCart extends Component {
             .catch(error => console.log(error));
     }
 
-    _openPaypal() {
-        // 3 env available: NO_NETWORK, SANDBOX, PRODUCTION 
-        PayPal.initialize(PayPal.SANDBOX, "ASwEOBo3UxdwSkMrQQM26yVbnqcqqaCruswMEzq8mlmHkK9zbcF2aOtgLz_r_olIUZbftLQ_6Q1LOb1I");
-        PayPal.pay({
-            price: '40.70',
-            currency: 'USD',
-            description: 'Your description goes here',
-        }).then(confirm => console.log(confirm))
-            .catch(error => console.log(error));
-    }
-
-    _openPaypal() {
-        // 3 env available: NO_NETWORK, SANDBOX, PRODUCTION 
-        PayPal.initialize(PayPal.SANDBOX, "ASwEOBo3UxdwSkMrQQM26yVbnqcqqaCruswMEzq8mlmHkK9zbcF2aOtgLz_r_olIUZbftLQ_6Q1LOb1I");
-        PayPal.pay({
-            price: '40.70',
-            currency: 'USD',
-            description: 'Your description goes here',
-        }).then(confirm => console.log(confirm))
-            .catch(error => console.log(error));
-    }
-
-    _openPaypal() {
-        // 3 env available: NO_NETWORK, SANDBOX, PRODUCTION 
-        PayPal.initialize(PayPal.SANDBOX, "ASwEOBo3UxdwSkMrQQM26yVbnqcqqaCruswMEzq8mlmHkK9zbcF2aOtgLz_r_olIUZbftLQ_6Q1LOb1I");
-        PayPal.pay({
-            price: '40.70',
-            currency: 'USD',
-            description: 'Your description goes here',
-        }).then(confirm => console.log(confirm))
-            .catch(error => console.log(error));
-    }
-
     render() {
         return (
              <View style={this.props.outerContainerStyle} >
