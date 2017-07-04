@@ -45,8 +45,8 @@ class Login extends Component{
         super(props)
         this.state ={
             loading: false,
-            email: 'ryan.adhitya@mitrais.com',
-            password: 'mitrais',
+            email: 'Test@test.com',
+            password: '1234567',
             userId: '',
             accessToken: '',
             user: null

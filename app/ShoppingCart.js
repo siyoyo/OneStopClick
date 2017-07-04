@@ -16,6 +16,26 @@ const Rx = require('rx');
 class ShoppingCart extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            totalAmount: 0
+        }
+    }
+
+    componentWillMount(){
+        // this._calculateTotalAmount()
+        this.props.calculateTotalAmount()
+    }
+
+    _calculateTotalAmount(){
+        var total = 0
+        this.props.products.forEach(function(product) {
+            console.log('product price : ', product.price)
+            total = parseInt(total) + parseInt(product.price)
+            console.log(total)
+        }, this);
+        this.setState({
+            totalAmount : total
+        })
     }
 
     render() {
@@ -31,6 +51,9 @@ class ShoppingCart extends Component {
                             canDelete={true}
                             deleteFunc={(product) => this.props.deleteFunc(product)}/>
                 </View >
+                <View>
+                    <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, marginTop: 15, marginLeft: 15 }}>Total : {ProductStore.getState().totalAmount}</Text>
+                </View>
             </View>
         )
     }

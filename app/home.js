@@ -135,6 +135,18 @@ class Home extends Component {
                             shoppingCartItems: this._updateShoppingCart()
                         })
                     }}
+                    calculateTotalAmount={() => {
+                        var total = 0
+                        this.state.shoppingCartItems.forEach(function(product) {
+                            console.log('product price : ', product.price)
+                            total = parseInt(total) + parseInt(product.price)
+                            console.log(total)
+                        }, this);
+                        ProductStore.dispatch({
+                            totalAmount: total,
+                            type: 'UPDATE_TOTAL_AMOUNT'
+                        })
+                    }}
                 />
             );
         } else if (this.state.selectedMenu == 3) {
