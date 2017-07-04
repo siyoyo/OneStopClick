@@ -5,7 +5,8 @@ import {
     Text,
     View,
     Navigator,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native'
 
 import Swipeout from 'react-native-swipeout'
@@ -40,38 +41,62 @@ class ShoppingCart extends Component {
         })
     }
 
+    _renderTotal() {
+        if (this.props.products.length > 0) {
+            return (
+                <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, marginTop: 15, marginLeft: 15 }}>Total : {ProductStore.getState().totalAmount}</Text>
+            );
+        }
+        else {
+            return (
+                <Text style={{ fontSize: 14, marginTop: 15, marginLeft: 15 }}>You dont have anything in the cart</Text>
+            );
+        }
+    }
+
     _openPaypal() {
+        var totalPriceString = ProductStore.getState().totalAmount.toString();
+        console.log(`total amount: ${totalPriceString}`);
         // 3 env available: NO_NETWORK, SANDBOX, PRODUCTION 
         PayPal.initialize(PayPal.SANDBOX, "ASwEOBo3UxdwSkMrQQM26yVbnqcqqaCruswMEzq8mlmHkK9zbcF2aOtgLz_r_olIUZbftLQ_6Q1LOb1I");
         PayPal.pay({
-            price: '40.70',
+            price: totalPriceString,
             currency: 'USD',
-            description: 'Your description goes here',
-        }).then(confirm => console.log(confirm))
-            .catch(error => console.log(error));
+            description: 'Buy please ^_^',
+        }).then(confirm => alert(JSON.stringify(confirm, null, 4)))
+            .catch(error => alert(JSON.stringify(error, null, 4)));
+    }
+
+    _renderPaypal() {
+        if (ProductStore.getState().totalAmount > 0) {
+            return (
+                <TouchableOpacity onPress={() => this._openPaypal()}>
+                    <Image
+                        style={{ width: 173, height: 34, marginLeft: 15, marginTop: 15 }}
+                        source={{ uri: 'https://www.paypalobjects.com/webstatic/en_US/i/btn/png/gold-pill-paypalcheckout-34px.png' }}
+                    />
+                </TouchableOpacity>
+            );
+        }
     }
 
     render() {
+        var paypal = this._renderPaypal();
+        var total = this._renderTotal();
         return (
-             <View style={this.props.outerContainerStyle} >
-                <TouchableOpacity onPress={() => this._openPaypal()}>
-                    <View>
-                        <Text>Press this</Text>
-                    </View>
-                </TouchableOpacity>
+            <View style={this.props.outerContainerStyle} >
                 <View style={this.props.innerContainerStyle}>
                     <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, marginTop: 15, marginLeft: 15 }}>Shopping Cart</Text>
                     <Products products={this.props.products}
-                            horizontal={false}
-                            navigator={this.props.navigator}
-                            productsContainerStyle={styles.productsContainer}
-                            productBoxContainerStyle={styles.productBoxContainerStyle} 
-                            canDelete={true}
-                            deleteFunc={(product) => this.props.deleteFunc(product)}/>
+                        horizontal={false}
+                        navigator={this.props.navigator}
+                        productsContainerStyle={styles.productsContainer}
+                        productBoxContainerStyle={styles.productBoxContainerStyle}
+                        canDelete={true}
+                        deleteFunc={(product) => this.props.deleteFunc(product)} />
                 </View >
-                <View>
-                    <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, marginTop: 15, marginLeft: 15 }}>Total : {ProductStore.getState().totalAmount}</Text>
-                </View>
+                {total}
+                {paypal}
             </View>
         )
     }
