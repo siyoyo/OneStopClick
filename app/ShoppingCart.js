@@ -5,6 +5,7 @@ import {
     Text,
     View,
     Navigator,
+    TouchableOpacity
 } from 'react-native'
 
 import Swipeout from 'react-native-swipeout'
@@ -12,15 +13,32 @@ import Swipeout from 'react-native-swipeout'
 const Products= require("./Products");
 const ProductStore = require('./Store/ProductStore');
 const Rx = require('rx');
+import PayPal from 'react-native-paypal-wrapper';
 
 class ShoppingCart extends Component {
     constructor(props) {
         super(props)
     }
 
+    _openPaypal() {
+        // 3 env available: NO_NETWORK, SANDBOX, PRODUCTION 
+        PayPal.initialize(PayPal.SANDBOX, "ASwEOBo3UxdwSkMrQQM26yVbnqcqqaCruswMEzq8mlmHkK9zbcF2aOtgLz_r_olIUZbftLQ_6Q1LOb1I");
+        PayPal.pay({
+            price: '40.70',
+            currency: 'USD',
+            description: 'Your description goes here',
+        }).then(confirm => console.log(confirm))
+            .catch(error => console.log(error));
+    }
+
     render() {
         return (
              <View style={this.props.outerContainerStyle} >
+                <TouchableOpacity onPress={() => this._openPaypal()}>
+                    <View>
+                        <Text>Press this</Text>
+                    </View>
+                </TouchableOpacity>
                 <View style={this.props.innerContainerStyle}>
                     <Text style={{ color: '#6119BD', fontWeight: '600', fontSize: 14, marginTop: 15, marginLeft: 15 }}>Shopping Cart</Text>
                     <Products products={this.props.products}
