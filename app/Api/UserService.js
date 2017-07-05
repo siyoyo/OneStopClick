@@ -9,7 +9,7 @@ const UserStore = require('../Store/UserStore');
 const ProductService = Object.assign({}, APIManager, {
 
     getDetails: function () {
-        var url = this.constructUrl('api/getuserdetails') + UserStore.getState().user.username;
+        var url = this.constructUrl('api/getuserdetails')
         const options = this.setupOptionsAuth("get");
         return fetch(url, options)
             .then(this.checkResponse)
