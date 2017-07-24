@@ -21,6 +21,9 @@ import Registration from './registration'
 import FBSDK  from 'react-native-fbsdk'
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
 
+import * as firebase from "firebase";
+firebase.initializeApp({apiKey: "AIzaSyAbcVddJDJmx_n6Na-m9c-Uaoy__JfuE08", authDomain: "yoyoreact.firebaseapp.com", databaseURL: "https://yoyoreact.firebaseio.com/", storageBucket: "gs://yoyoreact.appspot.com"});
+
 const{
     LoginButton,
     AccessToken
@@ -231,6 +234,43 @@ class Login extends Component{
         }
     }
 
+     // instant async method, if in android must created a class 
+    async firebaseLogin() {
+    
+    console.log('Try to login with firebase..')
+    this.setState({loading: true});
+
+    var loginForm = this
+    
+    // executed in separated thread
+    await firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(function (firebaseUser) {
+         console.log("Successfully Login Using Firebase Authentication Service" + JSON.stringify(firebaseUser));
+         UserStore.dispatch({
+            accessToken: firebaseUser.accessToken,
+            type: 'UPDATE_ACCESS_TOKEN'
+         });
+
+         UserStore.dispatch({
+            username: firebaseUser.email,
+            type: 'LOGIN'
+         });
+
+         loginForm.props.navigator.replace({
+            title: 'Home',
+            id: 'Home'
+         })
+      })
+      .catch(function (error) {
+        alert("Failed to login");
+        console.log("Failed to login " + error)
+      });
+
+      this.setState({loading: false});
+    }
+
     signInGoogle(){
         GoogleSignin.signIn()
         .then((user) => {
@@ -268,7 +308,7 @@ class Login extends Component{
             );
         }
     }
-
+   //  onPress= {this.firebaseLogin.bind(this)} 
     render(){
         var loginButton = this._renderLoginBtn();
         return(
@@ -315,7 +355,7 @@ class Login extends Component{
                                 </View>
                                 <TouchableOpacity activeOpacity={.5}
                                     testID="test-id-buttonSignIn"
-                                    onPress= {() => this._loginBtnPressStream.onNext(null)}>
+                                    onPress= {this.firebaseLogin.bind(this)}>
                                     {loginButton}
                                 </TouchableOpacity>
                                 <Text style={styles.orText}>Or</Text>
