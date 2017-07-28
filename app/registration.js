@@ -53,6 +53,56 @@ export default class Registration extends Component{
             return true
         }
     }
+
+    async firebaseSignUp() 
+    {
+        if(!this.validateForm() || !this.validatePassword(this.state.password, this.state.confirmPassword)) {
+            return
+        } 
+        this.setState({
+            loading: true
+        })
+
+        try {
+            await global.firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)   
+            .then(function (firebaseUser) {
+             
+             console.log("Firebase account created: " + JSON.stringify(firebaseUser));
+             //TODO : Implement Reset Password 
+             //firebase.auth().
+             // if user not authenticated 
+             if(!firebaseUser.emailVerified)
+             {
+                global.firebase.auth().currentUser.sendEmailVerification().then(function() {
+                // Email sent.
+                Alert.alert('Notification', 'Email verification has been sent' ,[{test:'OK', onPress:() => 
+                 this.setState({
+                    loading: false
+                  })
+                }])
+                }, function(error) {
+                  // An error happened.
+                  alert(JSON.stringify(error))
+                  alert('Email email has been used for another account')
+                });
+             }
+          });
+        } 
+        catch (error) {
+            Alert.alert('User Exists', error.message,[{test:'OK', onPress:() => 
+                this.setState({
+                    loading: false
+                })
+            }])
+
+            alert(error.message)
+        }
+
+        this.setState({
+            loading: false
+        })
+    }
+
     signUp(){
         if(!this.validateForm() || !this.validatePassword(this.state.password, this.state.confirmPassword)) {
             return
@@ -179,7 +229,7 @@ export default class Registration extends Component{
                                 />
                             </View>
                             <TouchableOpacity activeOpacity={.5}
-                                onPress={this.signUp.bind(this)}>
+                                onPress={this.firebaseSignUp.bind(this)}>
                                 <View style={styles.button}>
                                     <Text style={styles.buttonText}>Register</Text>
                                 </View>

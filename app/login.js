@@ -24,6 +24,8 @@ import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
 import * as firebase from "firebase";
 firebase.initializeApp({apiKey: "AIzaSyAbcVddJDJmx_n6Na-m9c-Uaoy__JfuE08", authDomain: "yoyoreact.firebaseapp.com", databaseURL: "https://yoyoreact.firebaseio.com/", storageBucket: "gs://yoyoreact.appspot.com"});
 
+global.firebase = firebase;
+
 const{
     LoginButton,
     AccessToken
@@ -248,6 +250,25 @@ class Login extends Component{
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(function (firebaseUser) {
          console.log("Successfully Login Using Firebase Authentication Service" + JSON.stringify(firebaseUser));
+         
+        if(!firebaseUser.emailVerified)
+         {
+                global.firebase.auth().currentUser.sendEmailVerification().then(function() {
+                // Email sent.
+                Alert.alert('User Is Not Active', 'Check your email for verification' ,[{test:'OK', onPress:() => 
+                 this.setState({
+                    loading: false
+                  })
+                }])
+                }, function(error) {
+                  // An error happened.
+                  alert(JSON.stringify(error))
+                  alert('Email email has been used for another account')
+                });
+
+            return;
+         }
+         
          UserStore.dispatch({
             accessToken: firebaseUser.accessToken,
             type: 'UPDATE_ACCESS_TOKEN'
